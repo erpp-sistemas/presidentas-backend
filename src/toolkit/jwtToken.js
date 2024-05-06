@@ -12,7 +12,7 @@ const WORD_KEY = process.env.WORD_KEY;
       payload,
       WORD_KEY,
       {
-        expiresIn: '1d'
+        expiresIn: '1h'
       },
       (err, token) => {
         if(err) reject(err)
@@ -27,10 +27,10 @@ const WORD_KEY = process.env.WORD_KEY;
 const validateToken=(token)=>{
     try {
         const decoded = jwt.verify(token.split(' ')[1], WORD_KEY);
-        return decoded;
+        return decoded
     } catch (error) {
         console.error('Error al decodificar el token:', error.message);
-        return null;
+        return "token";
     }
 }
 

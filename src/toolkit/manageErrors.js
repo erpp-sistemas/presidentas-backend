@@ -4,8 +4,8 @@ const { validateToken } = require("./jwtToken")
 const managePermissions=(rol,token)=>{
   let candado=true
   const daraToken=validateToken(token)
-  console.log(rol,daraToken.rol)
-  if(rol){
+ 
+  if(rol&&daraToken.id){
 
     candado=daraToken.rol==rol;
 
@@ -25,7 +25,8 @@ const manageErrors=(functionP,rol)=>async(req,res)=>{
     try{
       await functionP(req,res)
     }catch(error){
-        res.status(400).json({data:error})
+        console.log(error)
+        res.status(error?.status||400).json({data:error})
     }
   }else{
     res.status(400).json({data:"this user is not authorized"})

@@ -12,8 +12,8 @@ const login=async (data)=>{
     const password=user?await bcrypt.compare(data.contrasena,user?.contrasena):false
   
     const messages=[
-        "this password is fail",
-        "this user no exists"
+        "Error al autenticar, vuelva a intentar",
+        "Este usuario no existe"
     ]
     
     if(user&&password){
@@ -22,7 +22,7 @@ const login=async (data)=>{
          return {user,token}
 
     }else{
-        throw {message:messages[!user&&1||!password&&0]}
+        throw {message:messages[!user&&1||!password&&0],status:!user&&404||!password&&400}
     }
       
     

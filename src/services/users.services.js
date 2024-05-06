@@ -17,7 +17,7 @@ const httpGetMe=async(req,res)=>{
     const token=req.headers.authorization
       
         const daraToken=validateToken(token)
-      
+        console.log("Token",daraToken)
         if(token&&daraToken.id){
             const user=await c.getUserById(daraToken.id)
             res.status(200).json({user})

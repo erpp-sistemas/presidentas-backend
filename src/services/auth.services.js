@@ -6,7 +6,7 @@ const {validateToken} = require('../toolkit/jwtToken');
 const httpLogin=async(req,res)=>{
     const data=req.body
         const user=await c.login(data)
-        res.cookie("token", user.token);
+        res.cookie("token", user.token)
             res.status(200).json({user})
 }
 
