@@ -15,7 +15,6 @@ const registerSchema=zod.object({
     numeroExt:zod.string().optional(),
     colonia:zod.string().optional(),
     tell_casa:zod.string().optional(),
-    foto:zod.string().optional(),
     tell:zod.number({required_error:"tell is requerid"}),
     fecha_nacimiento:zod.string({required_error:"fecha_nacimiento is requerid"}).date(),
     // rol:zod.number({required_error:"rol is requerid"})

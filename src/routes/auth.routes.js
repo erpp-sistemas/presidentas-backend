@@ -11,7 +11,7 @@ router.post('/createCode',manageErrors(services.httpCreateCode,0))
 
 router.post('/register',validateSchema(schema.registerSchema),manageErrors(services.httpRegister,1))
 
-
+router.post('/registerAuth',validateSchema(schema.registerSchema),manageErrors(services.httpRegisterAutenticar,1))
 
 router.post('/login',validateSchema(schema.loginSchema),manageErrors(services.httpLogin,0))
 

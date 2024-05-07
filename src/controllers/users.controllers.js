@@ -1,5 +1,6 @@
 const { Op } = require("sequelize")
 const userModel = require("../models/users.model")
+const fileModel = require("../models/file.model")
 
 
 //? //////////////
@@ -17,6 +18,20 @@ const getAllAdmins=async()=>{
 //? //////////////
 const getUserById=async(id)=>{
     const user=await userModel.findOne({where:{id}})
+
+    return user
+}
+
+//? //////////////
+
+const getFileById=async(userId,id)=>{
+    const user=await fileModel.findOne({where:{fileId:id,userId}})
+
+    return user
+}
+
+const getAllFileUser=async(userId)=>{
+    const user=await fileModel.findAll({where:{userId}})
 
     return user
 }
@@ -45,6 +60,12 @@ const updateUserById=async(id,data)=>{
    
 }
 
+//? //////////////
+
+const newFile=async(data)=>{
+    const file=await fileModel.create(data)
+    return file
+}
 
 
 
@@ -55,7 +76,11 @@ module.exports={
     getAllAdmins,
     getAllUsuers,
     updateUserById,
-    getUserById
+    getUserById,
+    newFile,
+    getAllFileUser,
+    getFileById
+    
 }
 
 

@@ -49,10 +49,6 @@ const userModel=sequelize.define('users',{
         type:Datatypes.STRING,
         allowNull:true
     },
-    foto:{
-        type:Datatypes.STRING,
-        allowNull:true
-    },
     fecha_nacimiento:{
         type:Datatypes.DATE,
         allowNull:false

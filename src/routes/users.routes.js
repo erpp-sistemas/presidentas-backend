@@ -9,6 +9,10 @@ router.get("/users",manageErrors(services.httpGetAllUsers,1))
 
 router.get("/users/admin",manageErrors(services.httpGetAllUsersAdmins,1))
 
+router.get("/users/me/files/:id",manageErrors(services.httpGetMeFiles))
+
+router.post("/users/file",manageErrors(services.httpNewFile,1))
+
 router.get("/users/me",manageErrors(services.httpGetMe))
 
 router.put("/users/me",manageErrors(services.httpEditMe))
