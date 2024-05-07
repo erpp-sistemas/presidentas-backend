@@ -30,10 +30,28 @@ const userModel=sequelize.define('users',{
         allowNull:false
     },
     tell:{
-        type:{
             type:Datatypes.NUMBER,
             allowNull:false
-        }
+    },
+    calle:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
+    numeroExt:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
+    colonia:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
+    tell_casa:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
+    foto:{
+        type:Datatypes.STRING,
+        allowNull:true
     },
     fecha_nacimiento:{
         type:Datatypes.DATE,

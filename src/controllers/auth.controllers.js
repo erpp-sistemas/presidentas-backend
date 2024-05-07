@@ -2,6 +2,7 @@ const uuid  = require('uuid')
 const usersModel=require('../models/users.model')
 const bcrypt=require('bcryptjs')
 const {createAccessToken} = require('../toolkit/jwtToken')
+const codigoModel = require('../models/codigo.model')
 
 //? //////////////
 
@@ -30,23 +31,54 @@ const login=async (data)=>{
 
 //? //////////////
 
-const register=async(data)=>{
-    const id=uuid.v4()
-    const tell= await usersModel.findOne({where:{tell:data.tell}})
-    const correo= await usersModel.findOne({where:{correo:data.correo}})
 
-    const messages=[
-        "this tell already exists",
-        "this email already exists"
-    ]
-
-    if(!tell&&!correo){
-        const passHasheo=await bcrypt.hash(data.contrasena,10)
-        const user=await usersModel.create({id,...data,contrasena:passHasheo,rol:2})
-
-        return user
+const createCode=async(data)=>{
+    console.log(data)
+    const existeTell= await codigoModel.findOne({where:{tell:data.tell}})
+    if(!existeTell){
+        const code=await codigoModel.create({tell:data.tell,codigo:"1234"})
+        return 201
     }else{
-        throw {message:messages[correo&&1||tell&&0]}
+        const code=await codigoModel.update({codigo:"1234"},{where:{tell:data.tell}})
+        return 201
+    }
+   
+}
+
+//? //////////////
+const verificationTell=async(tellID,token)=>{
+    
+
+    const tell= await codigoModel.findOne({where:{tell:tellID}})
+    if(tell&&token==tell.codigo){
+        return true
+    }else{
+        throw {message:"El código de autenticación no coincide"}
+    }
+
+}
+
+
+const register=async(data)=>{
+    const verificado= await verificationTell(data.tell,data.codigo)
+    if(verificado){
+        const id=uuid.v4()
+        const tell= await usersModel.findOne({where:{tell:data.tell}})
+        const correo= await usersModel.findOne({where:{correo:data.correo}})
+    
+        const messages=[
+            "this tell already exists",
+            "this email already exists"
+        ]
+    
+        if(!tell&&!correo){
+            const passHasheo=await bcrypt.hash(data.contrasena,10)
+            const user=await usersModel.create({id,...data,contrasena:passHasheo,rol:2})
+    
+            return user
+        }else{
+            throw {message:messages[correo&&1||tell&&0]}
+        }
     }
 }
 
@@ -54,7 +86,8 @@ const register=async(data)=>{
 
 module.exports={
     login,
-    register
+    register,
+    createCode
 }
 
 

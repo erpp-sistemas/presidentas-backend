@@ -12,6 +12,16 @@ const httpLogin=async(req,res)=>{
 
 //? //////////////
 
+const httpCreateCode=async(req,res)=>{
+    console.log("holaaa")
+    const data=req.body
+        const code= await c.createCode(data)
+        res.status(201).json({message:"code created success"})
+
+}
+
+//? //////////////
+
 const httpRegister=async(req,res)=>{
     const data=req.body
   
@@ -33,7 +43,8 @@ const httpLogauth=async(req,res)=>{
 module.exports={
     httpLogin,
     httpRegister,
-    httpLogauth
+    httpLogauth,
+    httpCreateCode
 }
 
 

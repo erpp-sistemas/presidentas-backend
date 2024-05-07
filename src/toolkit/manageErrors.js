@@ -1,15 +1,19 @@
 const { validateToken } = require("./jwtToken")
 
+
 //* Maneja los permisos 
 const managePermissions=(rol,token)=>{
   let candado=true
   const daraToken=validateToken(token)
  
-  if(rol&&daraToken.id){
+  if(rol&&daraToken?.id){
+    console.log(daraToken)
 
     candado=daraToken.rol==rol;
 
   }
+  if(daraToken==null){candado=null}
+
   return candado
 }
 
@@ -21,7 +25,8 @@ const manageErrors=(functionP,rol)=>async(req,res)=>{
 
   console.log(">>>>>>>>>>>>>>> Ruta autorizada :",havePermissions)
 
-  if(havePermissions){
+  if(havePermissions==null&&rol!=0){return res.status(401).json({data:"you are not have login"})}
+  if(havePermissions||rol==0){
     try{
       await functionP(req,res)
     }catch(error){

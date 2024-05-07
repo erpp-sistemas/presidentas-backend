@@ -30,7 +30,7 @@ const validateToken=(token)=>{
         return decoded
     } catch (error) {
         console.error('Error al decodificar el token:', error.message);
-        return "token";
+        return null;
     }
 }
 
