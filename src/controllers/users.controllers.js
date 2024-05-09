@@ -1,6 +1,7 @@
 const { Op } = require("sequelize")
 const userModel = require("../models/users.model")
 const fileModel = require("../models/file.model")
+const keyFilesModel = require("../models/keys.model")
 
 
 //? //////////////
@@ -17,8 +18,14 @@ const getAllAdmins=async()=>{
 
 //? //////////////
 const getUserById=async(id)=>{
-    const user=await userModel.findOne({where:{id}})
-
+    const user = await userModel.findOne({
+        where: { id },
+        include: [{
+            model:fileModel,
+            where:{fileId:"1"},
+            required: false
+        }] 
+    });
     return user
 }
 
@@ -31,7 +38,15 @@ const getFileById=async(userId,id)=>{
 }
 
 const getAllFileUser=async(userId)=>{
-    const user=await fileModel.findAll({where:{userId}})
+    const user=await fileModel.findAll({
+        where:{userId},
+        include:[{
+            model:keyFilesModel,
+            where:{active:1},
+            required:false
+        }]
+    
+    })
 
     return user
 }

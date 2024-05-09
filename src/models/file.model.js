@@ -1,6 +1,7 @@
 const DataTypes=require('sequelize').DataTypes
 
 const sequelize=require('../config/dbConfig')
+// const keyFilesModel = require('./keys.model')
 
 
 const fileModel=sequelize.define("filesUsers",{
@@ -13,7 +14,7 @@ const fileModel=sequelize.define("filesUsers",{
     },
     fileId :{
         type:DataTypes.INTEGER,
-        allowNull:false
+        allowNull:false,
     },
     userId :{
         type:DataTypes.STRING,
@@ -27,7 +28,7 @@ const fileModel=sequelize.define("filesUsers",{
 },{timestamps:false})
 
 
-
+// fileModel.hasOne(keyFilesModel,{foreignKey:"id"})
 
 
 

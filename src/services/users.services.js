@@ -28,18 +28,33 @@ const httpGetMe=async(req,res)=>{
 
 //? //////////////
 
+const httpGetMeAllFiles=async(req,res)=>{
+    const token=req.headers.authorization
+    const file=req.params.id
+        const daraToken=validateToken(token)
+     
+        if(token&&daraToken.id){
+           
+                const  files=await c.getAllFileUser(daraToken.id,file)
+            
+            res.status(200).json({files})
+        }else{
+            res.status(404).json({message:"you are not have login"})
+        }
+}
+
+//? //////////////
+
 const httpGetMeFiles=async(req,res)=>{
     const token=req.headers.authorization
     const file=req.params.id
         const daraToken=validateToken(token)
      
         if(token&&daraToken.id){
-            console.log(file)
-            let user=await c.getAllFileUser(daraToken.id)
-            if(file){
-                 user=await c.getFileById(daraToken.id)
-            }
-            res.status(200).json({user})
+           
+                const  files=await c.getFileById(daraToken.id,file)
+            
+            res.status(200).json({files})
         }else{
             res.status(404).json({message:"you are not have login"})
         }
@@ -97,6 +112,7 @@ module.exports={
     httpGetUserById,
     httpEditUserById,
     httpNewFile,
-    httpGetMeFiles
+    httpGetMeFiles,
+    httpGetMeAllFiles
 }
 

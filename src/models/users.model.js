@@ -1,5 +1,7 @@
 const Datatypes=require('sequelize').DataTypes
 const sequelize=require('../config/dbConfig')
+const fileModel = require('./file.model')
+
 
 
 const userModel=sequelize.define('users',{
@@ -60,6 +62,8 @@ const userModel=sequelize.define('users',{
 },{
     timestamps:false
 })
+
+userModel.hasMany(fileModel,{foreignKey:"userId"})
 
 
 

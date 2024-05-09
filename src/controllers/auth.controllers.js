@@ -3,12 +3,21 @@ const usersModel=require('../models/users.model')
 const bcrypt=require('bcryptjs')
 const {createAccessToken} = require('../toolkit/jwtToken')
 const codigoModel = require('../models/codigo.model')
+const fileModel = require('../models/file.model')
 
 //? //////////////
 
 const login=async (data)=>{
 
-    const user= await usersModel.findOne({where:{correo:data.correo}})
+    const user= await usersModel.findOne(
+        {where:{correo:data.correo},
+        include: [{
+            model:fileModel,
+            where:{fileId:"1"},
+            required: false
+        }] 
+    });
+    
  
     const password=user?await bcrypt.compare(data.contrasena,user?.contrasena):false
   

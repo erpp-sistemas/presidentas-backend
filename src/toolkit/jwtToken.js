@@ -12,7 +12,7 @@ const WORD_KEY = process.env.WORD_KEY;
       payload,
       WORD_KEY,
       {
-        expiresIn: '5h'
+        expiresIn: '1d'
       },
       (err, token) => {
         if(err) reject(err)

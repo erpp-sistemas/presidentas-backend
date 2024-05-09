@@ -11,6 +11,12 @@ router.get("/users/admin",manageErrors(services.httpGetAllUsersAdmins,1))
 
 router.get("/users/me/files/:id",manageErrors(services.httpGetMeFiles))
 
+router.get("/users/me/files",manageErrors(services.httpGetMeAllFiles))
+
+router.get("/users/files/:id",manageErrors(services.httpGetMeFiles,1))
+
+router.get("/users/fileByID/:id",manageErrors(services.httpGetMeFiles,1))
+
 router.post("/users/file",manageErrors(services.httpNewFile,1))
 
 router.get("/users/me",manageErrors(services.httpGetMe))
