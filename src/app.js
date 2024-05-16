@@ -15,7 +15,10 @@ const routesEventos = require("./routes/eventos.routes");
 //? /////////////////////////////////////////////////////////////////////
 //*CORS
 
-app.use(cors()) 
+app.use(cors({
+    origin:"*",
+    optionsSuccessStatus:"200"
+})) 
 //? /////////////////////////////////////////////////////////////////////
 
 app.use(express.json());
