@@ -29,7 +29,7 @@ const keyFilesModel=sequelize.define("filesKeys",{
     timestamps:false
 })
 
-keyFilesModel.hasMany(fileModel,{foreignKey:"fileId"})
+keyFilesModel.hasOne(fileModel,{foreignKey:"fileId"})
 
 
 module.exports=keyFilesModel

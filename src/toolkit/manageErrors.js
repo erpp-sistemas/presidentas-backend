@@ -7,8 +7,6 @@ const managePermissions=(rol,token)=>{
   const daraToken=validateToken(token)
  
   if(rol&&daraToken?.id){
-    console.log(daraToken)
-
     candado=daraToken.rol==rol;
 
   }

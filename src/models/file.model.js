@@ -1,6 +1,7 @@
 const DataTypes=require('sequelize').DataTypes
 
-const sequelize=require('../config/dbConfig')
+const sequelize=require('../config/dbConfig');
+// const keyFilesModel = require('./keys.model');
 // const keyFilesModel = require('./keys.model')
 
 
@@ -28,7 +29,7 @@ const fileModel=sequelize.define("filesUsers",{
 },{timestamps:false})
 
 
-// fileModel.hasOne(keyFilesModel,{foreignKey:"id"})
+// fileModel.belongsTo(keyFilesModel, { foreignKey: "fileId",targetKey:"id" });
 
 
 

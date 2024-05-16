@@ -2,6 +2,7 @@ const { Op } = require("sequelize")
 const userModel = require("../models/users.model")
 const fileModel = require("../models/file.model")
 const keyFilesModel = require("../models/keys.model")
+const main = require("../toolkit/sendEmail")
 
 
 //? //////////////
@@ -33,19 +34,13 @@ const getUserById=async(id)=>{
 
 const getFileById=async(userId,id)=>{
     const user=await fileModel.findOne({where:{fileId:id,userId}})
-
     return user
 }
 
 const getAllFileUser=async(userId)=>{
-    const user=await fileModel.findAll({
-        where:{userId},
-        include:[{
-            model:keyFilesModel,
-            where:{active:1},
-            required:false
-        }]
-    
+    const user=await keyFilesModel.findAll({
+        where:{active:1},
+        attributes:["nameFile","id"],
     })
 
     return user
@@ -65,7 +60,7 @@ const updateUserById=async(id,data)=>{
     ]
 
     if(candado1&&candado2){
-
+        
         const user=await userModel.update(data,{where:{id}})
         return user
 
@@ -78,6 +73,10 @@ const updateUserById=async(id,data)=>{
 //? //////////////
 
 const newFile=async(data)=>{
+    const existeFIle=await fileModel.findOne({where:{userId:data.userId,fileId:data.fileId}})
+    if(existeFIle){
+        await fileModel.destroy({where:{userId:data.userId,fileId:data.fileId}})
+    }
     const file=await fileModel.create(data)
     return file
 }

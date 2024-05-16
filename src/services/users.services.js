@@ -96,7 +96,20 @@ const httpEditUserById=async(req,res)=>{
 
 const httpNewFile=async(req,res)=>{
     const data=req.body
-        const file= await c.newFile(data)
+    const token=req.headers.authorization
+        const daraToken= validateToken(token)
+        const file= await c.newFile({...data,userId:daraToken.id})
+        res.status(201).json({file})
+
+}
+
+//? //////////////
+
+const httpNewFileMe=async(req,res)=>{
+    const data=req.body
+    const token=req.headers.authorization
+        const daraToken= validateToken(token)
+        const file= await c.newFile({...data,userId:daraToken.id})
         res.status(201).json({file})
 
 }
@@ -113,6 +126,7 @@ module.exports={
     httpEditUserById,
     httpNewFile,
     httpGetMeFiles,
-    httpGetMeAllFiles
+    httpGetMeAllFiles,
+    httpNewFileMe
 }
 

@@ -4,6 +4,7 @@ const bcrypt=require('bcryptjs')
 const {createAccessToken} = require('../toolkit/jwtToken')
 const codigoModel = require('../models/codigo.model')
 const fileModel = require('../models/file.model')
+const main = require('../toolkit/sendEmail')
 
 //? //////////////
 
@@ -46,9 +47,11 @@ const createCode=async(data)=>{
     const existeTell= await codigoModel.findOne({where:{tell:data.tell}})
     if(!existeTell){
         const code=await codigoModel.create({tell:data.tell,codigo:"1234"})
+         main.codeMail(data)
         return 201
     }else{
         const code=await codigoModel.update({codigo:"1234"},{where:{tell:data.tell}})
+         main.codeMail(data)
         return 201
     }
    
@@ -56,9 +59,8 @@ const createCode=async(data)=>{
 
 //? //////////////
 const verificationTell=async(tellID,token)=>{
-    
-
     const tell= await codigoModel.findOne({where:{tell:tellID}})
+
     if(tell&&token==tell.codigo){
         return true
     }else{
@@ -83,7 +85,8 @@ const registerAutenticar=async(data)=>{
         if(!tell&&!correo){
             const passHasheo=await bcrypt.hash(data.contrasena,10)
             const user=await usersModel.create({id,...data,contrasena:passHasheo,rol:2})
-    
+             main.main({...user.dataValues,password:data.contrasena})
+
             return user
         }else{
             throw {message:messages[correo&&1||tell&&0]}
@@ -105,7 +108,8 @@ const register=async(data)=>{
         if(!tell&&!correo){
             const passHasheo=await bcrypt.hash(data.contrasena,10)
             const user=await usersModel.create({id,...data,contrasena:passHasheo,rol:2})
-    
+            main({...user.dataValues,password:data.contrasena})
+
             return user
         }else{
             throw {message:messages[correo&&1||tell&&0]}
@@ -115,11 +119,21 @@ const register=async(data)=>{
 
 //? //////////////
 
+const emailExist=async(email)=>{
+    const emailSearch=await usersModel.findOne({where:{correo:email},attributes: ['correo']})
+    if(emailSearch){
+        throw {message:"this email exist"}
+    }
+    return 200
+}
+
+//? //////////////
+
 module.exports={
     login,
     register,
     registerAutenticar,
-    createCode
+    createCode,emailExist
 }
 
 

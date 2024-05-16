@@ -49,12 +49,22 @@ const httpLogauth=async(req,res)=>{
 
 //? //////////////
 
+const httpEmailUnique=async(req,res)=>{
+    const data=req.body
+    const email=await c.emailExist(data.email)
+
+    res.status(201).json({message:"El email No existe"})
+}
+
+//? //////////////
+
 module.exports={
     httpLogin,
     httpRegister,
     httpRegisterAutenticar,
     httpLogauth,
-    httpCreateCode
+    httpCreateCode,
+    httpEmailUnique
 }
 
 
