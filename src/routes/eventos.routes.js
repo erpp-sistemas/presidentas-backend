@@ -11,7 +11,7 @@ router.post('/eventos',validateSchema(schema.eventosSchema),manageErrors(service
 
 router.get('/eventos/:id',manageErrors(services.httpGetByIdEventos,1))
 
-router.put('/eventos/:id',validateSchema(schema.eventosSchema),manageErrors(services.httpUpdateEventos,1))
+router.put('/eventos/:id',manageErrors(services.httpUpdateEventos,1))
 
 router.delete('/eventos/:id',manageErrors(services.httpDeleteEventos,1))
 

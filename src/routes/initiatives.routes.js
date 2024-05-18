@@ -11,7 +11,7 @@ router.post('/initiatives',validateSchema(schema.initiativeSchema),manageErrors(
 
 router.get('/initiatives/:id',manageErrors(services.httpGetByIdInitiatives,1))
 
-router.put('/initiatives/:id',validateSchema(schema.initiativeSchema),manageErrors(services.httpUpdateInitiatives,1))
+router.put('/initiatives/:id',manageErrors(services.httpUpdateInitiatives,1))
 
 router.delete('/initiatives/:id',manageErrors(services.httpDeleteInitiatives,1))
 

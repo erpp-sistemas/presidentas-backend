@@ -59,16 +59,18 @@ const  main=async(user)=> {
                 Sin más por el momento le enviamos saludos.
             </div>
             <br>
-            <div style="display: flex;  width: 100%; background-color: #1f2937; color: #ffffff; text-align: center; padding: 15px 0;">
-                <div style="text-align: center; width: 100%; margin: auto; z-index: 29; font-size: x-small;">
-                    <span>Embajadoras ® <a href="https://embajadoras.mx/" style="color: #e46f88; text-decoration: none;">https://embajadoras.mx/</a></span>
-                    <br />
-                    <span>ERPP ®. Todos los derechos reservados. | Declaración de privacidad</span>
-                    <br />
-                    ERPP Corporativo | Balmes 11 | Col. Polanco, CDMX C.P.1151
-                </div>
+        
             </div>
+
+            <footer style="display: flex;  width: 100%; background-color: #1f2937; color: #ffffff; text-align: center; padding: 15px 0;">
+            <div style="text-align: center; width: 100%; margin: auto; z-index: 29; font-size: x-small;">
+                <span>Embajadoras ® <a href="https://embajadoras.mx/" style="color: #e46f88; text-decoration: none;">https://embajadoras.mx/</a></span>
+                <br />
+                <span>ERPP ®. Todos los derechos reservados. | Declaración de privacidad</span>
+                <br />
+                ERPP Corporativo | Balmes 11 | Col. Polanco, CDMX C.P.1151
             </div>
+        </footer>
         </div>
     
        

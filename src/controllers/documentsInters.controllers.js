@@ -19,7 +19,12 @@ const getByIdDocumentosInteres=async(id)=>{
 
 
 const newDocumentosInteres=async(data)=>{
-    const documentosInteres=await documentosInteresModel.create(data)
+    const documentosPosiciones=await getAllDocumentosInteres()
+    let newPosicion=2
+    for(let i of documentosPosiciones){
+        await updateByIdDocumentosInteres({posicion:newPosicion++},i.id)
+    }
+    const documentosInteres=await documentosInteresModel.create({...data,posicion:1,activo:1})
     return documentosInteres
 }
 

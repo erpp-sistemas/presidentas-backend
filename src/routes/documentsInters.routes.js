@@ -11,7 +11,7 @@ router.post('/documents',validateSchema(schema.documentSchema),manageErrors(serv
 
 router.get('/documents/:id',manageErrors(services.httpGetByIdDocumentosInteres,1))
 
-router.put('/documents/:id',validateSchema(schema.documentSchema),manageErrors(services.httpUpdateDocumentosInteres,1))
+router.put('/documents/:id',manageErrors(services.httpUpdateDocumentosInteres,1))
 
 router.delete('/documents/:id',manageErrors(services.httpDeleteDocumentosInteres,1))
 
