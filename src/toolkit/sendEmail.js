@@ -32,7 +32,7 @@ const  main=async(user,correo)=> {
     const htmlInit=`
     <div style="font-family: 'Poppins', sans-serif; font-weight: 500; font-style: normal; color: rgb(79, 79, 79);">
 
-<div style="max-width: 750px; margin: 0 auto; background-image: url(https://media.canva.com/1/image-resize/1/800_796_100_PNG_F/czM6Ly9tZWRpYS1wcml2YXRlLmNhbnZhLmNvbS9CRE1iMC9NQUdGSXBCRE1iMC8xL3AucG5n?osig=AAAAAAAAAAAAAAAAAAAAAHCIoxQvbpfQXSWJ_fQ3xX1EABbfe-me7n-jtRPov5Gk&exp=1715646102&x-canva-quality=screen&x-canva-subsampling=T&csig=AAAAAAAAAAAAAAAAAAAAAJ9xo1VfX_TL3xYM0MRppzBP1cbMKRqsvLfnn6zrw1Hi); background-position: right 82%; background-repeat: no-repeat; background-size: 35%;">
+<div style="max-width: 750px; margin: 0 auto; background-image: url(https://embajadoras.mx/assets/avatarCorreo.5098cdb3.webp); background-position: right 92%; background-repeat: no-repeat; background-size: 35%;">
     <header style="background-color: rgb(31, 41, 55); height: 100px; display: flex">
         <img src="https://embajadoras.mx/assets/logo_presidentas_letras.a260cd35.png" alt="Embajadoras Logo"
             style="width: 200px; margin: auto;" />
