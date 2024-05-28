@@ -58,7 +58,16 @@ const userModel=sequelize.define('users',{
     rol:{
         type:Datatypes.INTEGER,
         allowNull:false
-    }
+    },
+    nvl_academico:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
+    profesion:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
+
 },{
     timestamps:false
 })

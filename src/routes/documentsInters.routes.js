@@ -4,7 +4,7 @@ const manageErrors = require('../toolkit/manageErrors')
 const schema=require('../schemas/documentsInters.schema')
 const validateSchema = require('../toolkit/validdatorSchemas')
 
-//TODO CRUD DE INICIATIVAS
+//TODO CRUD DE DOCUMENTOS REQUERIDOS
 router.get('/documents',manageErrors(services.httpGetAllDocumentosInteres))
 
 router.post('/documents',validateSchema(schema.documentSchema),manageErrors(services.httpNewDocumentosInteres,1))

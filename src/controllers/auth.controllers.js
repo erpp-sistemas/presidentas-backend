@@ -48,12 +48,12 @@ const createCode=async(data)=>{
     const existeTell= await codigoModel.findOne({where:{tell:data.tell}})
     if(!existeTell){
         const code=await codigoModel.create({tell:data.tell,codigo:"1234"})
-        const correo=await correosModel.findOne({where:{id:2}})
+        const correo=await correosModel.findOne({where:{id:1}})
          main(data,correo)
         return 201
     }else{
         const code=await codigoModel.update({codigo:"1234"},{where:{tell:data.tell}})
-        const correo=await correosModel.findOne({where:{id:2}})
+        const correo=await correosModel.findOne({where:{id:1}})
         main(data,correo)
         return 201
     }
@@ -88,8 +88,8 @@ const registerAutenticar=async(data)=>{
         if(!tell&&!correo){
             const passHasheo=await bcrypt.hash(data.contrasena,10)
             const user=await usersModel.create({id,...data,contrasena:passHasheo,rol:2})
-             const correo=await correosModel.findOne({where:{id:1}})
-             main({...user.dataValues,password:data.contrasena},correo)
+             const correo=await correosModel.findOne({where:{id:2}})
+             main({...user.dataValues,contrasena:data.contrasena},correo)
             return user
         }else{
             throw {message:messages[correo&&1||tell&&0]}
@@ -112,7 +112,7 @@ const register=async(data)=>{
             const passHasheo=await bcrypt.hash(data.contrasena,10)
             const user=await usersModel.create({id,...data,contrasena:passHasheo,rol:1})
             const correo=await correosModel.findOne({where:{id:2}})
-             main({...user.dataValues,password:data.contrasena},correo)
+             main({...user.dataValues,contrasena:data.contrasena},correo)
 
             return user
         }else{

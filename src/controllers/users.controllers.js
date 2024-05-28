@@ -1,4 +1,4 @@
-const { Op } = require("sequelize")
+const { Op, Sequelize } = require("sequelize")
 const userModel = require("../models/users.model")
 const fileModel = require("../models/file.model")
 const keyFilesModel = require("../models/keys.model")
@@ -7,7 +7,22 @@ const main = require("../toolkit/sendEmail")
 
 //? //////////////
 const getAllUsuers=async()=>{
-    const users=await userModel.findAll({where:{rol:2},attributes:{exclude:["contrasena"]}})
+    const users=await userModel.findAll({
+        where:{rol:2},
+        attributes:{
+                exclude:["contrasena"],
+        include: [
+            [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
+        ]
+        },
+        include: [{
+            model:fileModel,
+            where:{fileId:"1"},
+            required: false,
+        }]
+    })
+
+    
     return users
 }
 
@@ -48,12 +63,13 @@ const getAllFileUser=async(userId)=>{
 
 //? //////////////
 const updateUserById=async(id,data)=>{
+    
     const tell= await userModel.findOne({where:{tell:data.tell}})
     const correo= await userModel.findOne({where:{correo:data.correo}})
 
     const candado1=(id==tell?.dataValues?.id||!tell)
     const candado2=(id==correo?.dataValues?.id||!correo)
-
+   
     const messages=[
         "this tell already exists",
         "this email already exists"

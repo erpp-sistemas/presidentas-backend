@@ -15,12 +15,25 @@ const keyFilesModel=sequelize.define("filesKeys",{
         primaryKey:true,
         autoIncrement:true
     },
-    nameFile:{
+    key_file:{
         type:DataTypes.STRING,
         allowNull:false,
         unique:true
     },
-    active:{
+    nombre_file:{
+        type:DataTypes.STRING,
+        allowNull:false,
+    },
+    descripcion:{
+        type:DataTypes.STRING,
+        allowNull:false,
+   
+    },
+    tipo_id:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    activo:{
         type:DataTypes.INTEGER,
         allowNull:false
     }

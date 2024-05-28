@@ -59,6 +59,17 @@ const httpGetMeFiles=async(req,res)=>{
             res.status(404).json({message:"you are not have login"})
         }
 }
+//? //////////////
+
+const httpGetFilesByUser=async(req,res)=>{
+    const id=req.params.id
+    const file=req.params.file
+    
+        const  files=await c.getFileById(id,file)
+
+            res.status(200).json({files})
+      
+}
 
 //? //////////////
 const httpEditMe=async(req,res)=>{
@@ -67,6 +78,7 @@ const httpEditMe=async(req,res)=>{
    
     const token=req.headers.authorization
     const daraToken= validateToken(token)
+ 
     if(token&&daraToken.id){
         const user=await c.updateUserById(daraToken.id,data)
         res.status(200).json({user})
@@ -85,6 +97,7 @@ const httpGetUserById=async(req,res)=>{
 
 //? //////////////
 const httpEditUserById=async(req,res)=>{
+    
     const id=req.params.id
     const data=req.body
         const user=await c.updateUserById(id,data)
@@ -96,9 +109,7 @@ const httpEditUserById=async(req,res)=>{
 
 const httpNewFile=async(req,res)=>{
     const data=req.body
-    const token=req.headers.authorization
-        const daraToken= validateToken(token)
-        const file= await c.newFile({...data,userId:daraToken.id})
+        const file= await c.newFile(data)
         res.status(201).json({file})
 
 }
@@ -116,6 +127,16 @@ const httpNewFileMe=async(req,res)=>{
 
 //? //////////////
 
+const httpNewFileUser=async(req,res)=>{
+    const data=req.body
+    const id=req.params.id
+        const file= await c.newFile({...data,userId:id})
+        res.status(201).json({file})
+
+}
+
+//? //////////////
+
 
 module.exports={
     httpGetAllUsers,
@@ -127,6 +148,8 @@ module.exports={
     httpNewFile,
     httpGetMeFiles,
     httpGetMeAllFiles,
-    httpNewFileMe
+    httpNewFileMe,
+    httpGetFilesByUser,
+    httpNewFileUser
 }
 
