@@ -15,6 +15,7 @@ const convocatoriasRoutes = require("./routes/convocatorias.routes");
 const categoriaConvocatoriaRoutes = require("./routes/categoriaConvocatoria.routes");
 const tipoFilesRoutes = require("./routes/tipoFile.routes");
 const filesRoutes = require("./routes/files.routes");
+const postulacionesConvocatoriasRoutes = require("./routes/postulacionesConvocatorias.routes");
 
 
 //? /////////////////////////////////////////////////////////////////////
@@ -38,6 +39,7 @@ app.use('/embajadoras/api', convocatoriasRoutes);
 app.use('/embajadoras/api', categoriaConvocatoriaRoutes);
 app.use('/embajadoras/api', tipoFilesRoutes);
 app.use('/embajadoras/api', filesRoutes);
+app.use('/embajadoras/api', postulacionesConvocatoriasRoutes);
 
 
 

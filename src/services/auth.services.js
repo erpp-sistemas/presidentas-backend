@@ -55,6 +55,15 @@ const httpEmailUnique=async(req,res)=>{
 
     res.status(201).json({message:"El email No existe"})
 }
+//? //////////////
+
+const httpCurpUnique=async(req,res)=>{
+    const data=req.body
+    console.log(data)
+    await c.curpUnique(data.curp)
+
+    res.status(201).json({message:"El curp No existe"})
+}
 
 //? //////////////
 
@@ -64,7 +73,8 @@ module.exports={
     httpRegisterAutenticar,
     httpLogauth,
     httpCreateCode,
-    httpEmailUnique
+    httpEmailUnique,
+    httpCurpUnique
 }
 
 

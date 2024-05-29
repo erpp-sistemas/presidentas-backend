@@ -96,6 +96,14 @@ const httpGetUserById=async(req,res)=>{
 }
 
 //? //////////////
+const httpGetUserByCurp=async(req,res)=>{
+    console.log("hoolaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    const curp=req.params.curp
+        const user=await c.getUserByCurp(curp)
+        res.status(200).json({user})
+}
+
+//? //////////////
 const httpEditUserById=async(req,res)=>{
     
     const id=req.params.id
@@ -129,8 +137,7 @@ const httpNewFileMe=async(req,res)=>{
 
 const httpNewFileUser=async(req,res)=>{
     const data=req.body
-    const id=req.params.id
-        const file= await c.newFile({...data,userId:id})
+        const file= await c.newFile(data)
         res.status(201).json({file})
 
 }
@@ -150,6 +157,7 @@ module.exports={
     httpGetMeAllFiles,
     httpNewFileMe,
     httpGetFilesByUser,
-    httpNewFileUser
+    httpNewFileUser,
+    httpGetUserByCurp
 }
 

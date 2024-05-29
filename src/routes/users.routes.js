@@ -25,6 +25,9 @@ router.put("/users/:id",manageErrors(services.httpEditUserById,1))
 //* Obtiene la informacion de un usuario por id
 router.get("/users/:id",manageErrors(services.httpGetUserById,1))
 
+//* Obtiene la informacion de un usuario por curp
+router.get("/userByCurp/:curp",manageErrors(services.httpGetUserByCurp,0))
+
 
 //? //////////////////////////////////////////////////////////////////////
 //TODO USERS FILES
@@ -32,8 +35,11 @@ router.get("/users/:id",manageErrors(services.httpGetUserById,1))
 //*Obtiene un archivo de un usario en espesifico
 router.get("/users/files/:id/:file",manageErrors(services.httpGetFilesByUser,1))
 
-//*actualiza y agrega un archivo de un usario por id
-router.post("/users/files/:id/:file",manageErrors(services.httpNewFileUser,1))
+//!revisar *actualiza y agrega un archivo de un usario por id
+// router.post("/users/files/:id/:file",manageErrors(services.httpNewFileUser,0))
+
+//*actualiza y agrega un archivo de un usario por data en body
+router.post("/users/file",manageErrors(services.httpNewFileUser,0))
 
 //? //////////////////////////////////////////////////////////////////////
 //TODO ME FILES
@@ -52,7 +58,7 @@ router.post("/users/me/files",manageErrors(services.httpNewFileMe))
 router.get("/users/fileByID/:id",manageErrors(services.httpGetMeFiles,1))
 
 //!Obtiene un archivo de un usario en espesifico
-router.post("/users/file",manageErrors(services.httpNewFileUser,1))
+
 
 
 

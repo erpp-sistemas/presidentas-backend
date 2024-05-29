@@ -132,12 +132,23 @@ const emailExist=async(email)=>{
 }
 
 //? //////////////
+const curpUnique=async(curp)=>{
+    const curpSearch=await usersModel.findOne({where:{curp},attributes: ['curp']})
+    if(curpSearch){
+        throw {message:"this curp exist"}
+    }
+    return 200
+}
+
+//? //////////////
 
 module.exports={
     login,
     register,
     registerAutenticar,
-    createCode,emailExist
+    createCode,
+    emailExist,
+    curpUnique
 }
 
 

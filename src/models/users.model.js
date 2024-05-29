@@ -22,6 +22,10 @@ const userModel=sequelize.define('users',{
         type:Datatypes.STRING,
         allowNull:true
     },
+    curp:{
+        type:Datatypes.STRING,
+        allowNull:true
+    },
     correo: {
         type:Datatypes.STRING,
         unique:true,

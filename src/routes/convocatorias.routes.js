@@ -7,11 +7,11 @@ const validateSchema = require('../toolkit/validdatorSchemas')
 
 //TODO CRUD DE CONVOCATORIAS
 
-router.get('/convocatorias',manageErrors(services.httpGetAllConvocatorias))
+router.get('/convocatorias',manageErrors(services.httpGetAllConvocatorias,0))
 
 router.post('/convocatorias',validateSchema(schema.convocatoriaSchema),manageErrors(services.httpNewConvocatoria,1))
 
-router.get('/convocatorias/:id',manageErrors(services.httpGetByIdConvocatoria,1))
+router.get('/convocatorias/:id',manageErrors(services.httpGetByIdConvocatoria,0))
 
 router.put('/convocatorias/:id',manageErrors(services.httpUpdateConvocatoria,1))
 

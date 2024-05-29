@@ -44,6 +44,17 @@ const getUserById=async(id)=>{
     });
     return user
 }
+//? //////////////
+const getUserByCurp=async(curp)=>{
+    const user = await userModel.findOne({
+        where: { curp },
+        include: [{
+            model:fileModel,
+            required: false
+        }] 
+    });
+    return user
+}
 
 //? //////////////
 
@@ -109,7 +120,8 @@ module.exports={
     getUserById,
     newFile,
     getAllFileUser,
-    getFileById
+    getFileById,
+    getUserByCurp
     
 }
 

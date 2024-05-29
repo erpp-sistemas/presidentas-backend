@@ -7,11 +7,11 @@ const validateSchema = require('../toolkit/validdatorSchemas')
 
 //TODO CRUD DE CATEGORIACONVOCATORIAS
 
-router.get('/categoriaConvocatorias',manageErrors(services.httpGetAllCategoriaConvocatorias))
+router.get('/categoriaConvocatorias',manageErrors(services.httpGetAllCategoriaConvocatorias,0))
 
 router.post('/categoriaConvocatorias',validateSchema(schema.categoriaSchema),manageErrors(services.httpNewCategoriaConvocatoria,1))
 
-router.get('/categoriaConvocatorias/:id',manageErrors(services.httpGetByIdCategoriaConvocatoria,1))
+router.get('/categoriaConvocatorias/:id',manageErrors(services.httpGetByIdCategoriaConvocatoria,0))
 
 router.put('/categoriaConvocatorias/:id',manageErrors(services.httpUpdateCategoriaConvocatoria,1))
 

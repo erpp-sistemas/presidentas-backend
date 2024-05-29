@@ -6,6 +6,7 @@ const convocatoriaSchema=zod.object({
     titulo_convocatoria:zod.string({required_error:"titulo_convocatoria is requerid"}),
 	categorias_id :zod.string({required_error:"categorias_id is requerid"}),
 	descripcion :zod.string({required_error:"descripcion is requerid"}),
+	des_breve :zod.string({required_error:"des_breve is requerid"}),
 	fecha_limite_postulacion :zod.string({required_error:"fecha_limite_postulacion is requerid"}),
 })
 

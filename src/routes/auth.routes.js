@@ -19,6 +19,8 @@ router.post('/logout',manageErrors(services.httpLogauth))
 
 router.post('/emailUnique',manageErrors(services.httpEmailUnique,0))
 
+router.post('/curpUnique',manageErrors(services.httpCurpUnique,0))
+
 
 
 

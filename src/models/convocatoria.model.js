@@ -17,6 +17,10 @@ const convocatoriaModel=Sequelize.define("convocatorias",{
         type:DataTypes.STRING,
         allowNull:false
     },
+    des_breve:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     descripcion:{
         type:DataTypes.STRING,
         allowNull:false
