@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const Sequelize  = require("../config/dbConfig");
+const { formatDateText } = require("../toolkit/formatDate");
+// const postulacionesConvocatoriaModel = require("./postulacionesConvocatorias.model");
 
 
 const convocatoriaModel=Sequelize.define("convocatorias",{
@@ -31,13 +33,20 @@ const convocatoriaModel=Sequelize.define("convocatorias",{
     },
     fecha_limite_postulacion:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        get() {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>FORMATEANDO FECHAS")
+            const fecha = this.getDataValue('fecha_limite_postulacion');
+            const allFechas=formatDateText(fecha)
+           
+            console.log({...allFechas} );
+            return fecha ? {...allFechas} : null;
+        }
     },
     activo:{
         type:DataTypes.INTEGER,
         allowNull:false
     },
-    
 },{
     timestamps:false
 })

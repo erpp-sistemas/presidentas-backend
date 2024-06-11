@@ -16,6 +16,9 @@ const categoriaConvocatoriaRoutes = require("./routes/categoriaConvocatoria.rout
 const tipoFilesRoutes = require("./routes/tipoFile.routes");
 const filesRoutes = require("./routes/files.routes");
 const postulacionesConvocatoriasRoutes = require("./routes/postulacionesConvocatorias.routes");
+const convocatoriasGuardadasRoutes = require("./routes/convocatoriasGuardadas.routes");
+const postulacionesRoutes = require("./routes/postulaciones.routes");
+const estatusPostulacionesRoutes = require("./routes/estatusPostulaciones.routes");
 
 
 //? /////////////////////////////////////////////////////////////////////
@@ -40,6 +43,9 @@ app.use('/embajadoras/api', categoriaConvocatoriaRoutes);
 app.use('/embajadoras/api', tipoFilesRoutes);
 app.use('/embajadoras/api', filesRoutes);
 app.use('/embajadoras/api', postulacionesConvocatoriasRoutes);
+app.use('/embajadoras/api', convocatoriasGuardadasRoutes);
+app.use('/embajadoras/api', postulacionesRoutes);
+app.use('/embajadoras/api', estatusPostulacionesRoutes);
 
 
 

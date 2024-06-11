@@ -44,17 +44,20 @@ const login=async (data)=>{
 
 
 const createCode=async(data)=>{
-    console.log(data)
     const existeTell= await codigoModel.findOne({where:{tell:data.tell}})
     if(!existeTell){
         const code=await codigoModel.create({tell:data.tell,codigo:"1234"})
         const correo=await correosModel.findOne({where:{id:1}})
          main(data,correo)
+    console.log("codigo creado")
+
         return 201
     }else{
         const code=await codigoModel.update({codigo:"1234"},{where:{tell:data.tell}})
         const correo=await correosModel.findOne({where:{id:1}})
         main(data,correo)
+    console.log("codigo creado")
+
         return 201
     }
    
@@ -141,6 +144,43 @@ const curpUnique=async(curp)=>{
 }
 
 //? //////////////
+const curpAuth=async(curp)=>{
+    const curpSearch=await usersModel.findOne({where:{curp}, attributes:["curp","tell","correo"]});
+    if(!curpSearch){
+        throw {message:"this curp not exist"}
+    }
+    console.log(curpSearch)
+    await createCode(curpSearch.dataValues )
+
+    return curpSearch
+}
+
+
+
+//? //////////////
+const curpCodeLogin=async(data)=>{
+    const verificado= await verificationTell(data.tell,data.codigo)
+    if(verificado){
+        const user= await usersModel.findOne(
+            {where:{correo:data.correo},
+            include: [{
+                model:fileModel,
+                where:{fileId:"1"},
+                required: false
+            }] 
+        });
+        
+    
+            const token= await createAccessToken(user.dataValues)
+             return {user,token}
+    }{
+        throw {message:"No se pudo autenticar intete de nuevo" }
+    }
+}
+
+
+
+//? //////////////
 
 module.exports={
     login,
@@ -148,7 +188,9 @@ module.exports={
     registerAutenticar,
     createCode,
     emailExist,
-    curpUnique
+    curpUnique,
+    curpAuth,
+    curpCodeLogin
 }
 
 

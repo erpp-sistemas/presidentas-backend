@@ -9,6 +9,9 @@ const arrayMeses = [
 const formatDateText=(fecha)=>{
     const fechaEvento = new Date(fecha);
 
+    let fechaUsoFront = new Date(fecha).toISOString();
+   const [fechaFront] = fechaUsoFront.split("Z");
+
     const year = fechaEvento.getFullYear();
     const month = fechaEvento.getMonth() ;
     const day = fechaEvento.getDate(); 
@@ -21,7 +24,8 @@ const formatDateText=(fecha)=>{
     return{
         fechaFormateada,
         horaFormateada,
-        fechaHoraFormateada
+        fechaHoraFormateada,
+        fechaFront:fechaFront
     }
 }
 

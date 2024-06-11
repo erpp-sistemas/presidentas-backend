@@ -6,7 +6,7 @@ const fileModel = require('./file.model')
 
 const userModel=sequelize.define('users',{
     id:{
-        type:Datatypes.INTEGER,
+        type:Datatypes.STRING,
         allowNull:false,
         primaryKey:true
     },

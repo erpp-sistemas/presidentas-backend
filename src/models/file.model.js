@@ -14,7 +14,7 @@ const fileModel=sequelize.define("filesUsers",{
         autoIncrement:true
     },
     fileId :{
-        type:DataTypes.INTEGER,
+        type:DataTypes.STRING,
         allowNull:false,
     },
     userId :{

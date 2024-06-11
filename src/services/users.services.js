@@ -32,15 +32,11 @@ const httpGetMeAllFiles=async(req,res)=>{
     const token=req.headers.authorization
     const file=req.params.id
         const daraToken=validateToken(token)
-     
-        if(token&&daraToken.id){
-           
+      
                 const  files=await c.getAllFileUser(daraToken.id,file)
             
             res.status(200).json({files})
-        }else{
-            res.status(404).json({message:"you are not have login"})
-        }
+        
 }
 
 //? //////////////
@@ -59,6 +55,7 @@ const httpGetMeFiles=async(req,res)=>{
             res.status(404).json({message:"you are not have login"})
         }
 }
+
 //? //////////////
 
 const httpGetFilesByUser=async(req,res)=>{
@@ -66,6 +63,15 @@ const httpGetFilesByUser=async(req,res)=>{
     const file=req.params.file
     
         const  files=await c.getFileById(id,file)
+
+            res.status(200).json({files})
+      
+}
+//? //////////////
+
+const httpGetAllFilesByUser=async(req,res)=>{
+    const user=req.params.id
+        const  files=await c.getAllFileByUser(user)
 
             res.status(200).json({files})
       
@@ -91,13 +97,13 @@ const httpEditMe=async(req,res)=>{
 //? //////////////
 const httpGetUserById=async(req,res)=>{
     const id=req.params.id
+    console.log(id)
         const user=await c.getUserById(id)
         res.status(200).json({user})
 }
 
 //? //////////////
 const httpGetUserByCurp=async(req,res)=>{
-    console.log("hoolaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     const curp=req.params.curp
         const user=await c.getUserByCurp(curp)
         res.status(200).json({user})
@@ -158,6 +164,7 @@ module.exports={
     httpNewFileMe,
     httpGetFilesByUser,
     httpNewFileUser,
-    httpGetUserByCurp
+    httpGetUserByCurp,
+    httpGetAllFilesByUser
 }
 

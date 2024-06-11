@@ -29,8 +29,9 @@ const validateToken=(token)=>{
         const decoded = jwt.verify(token.split(' ')[1], WORD_KEY);
         return decoded
     } catch (error) {
-        console.error('Error al decodificar el token:', error.message);
-        return null;
+        console.error('>>>>>>>>>>>Error al decodificar el token:', error.message);
+        return null
+        
     }
 }
 

@@ -59,10 +59,29 @@ const httpEmailUnique=async(req,res)=>{
 
 const httpCurpUnique=async(req,res)=>{
     const data=req.body
-    console.log(data)
+ 
     await c.curpUnique(data.curp)
 
     res.status(201).json({message:"El curp No existe"})
+}
+
+//? //////////////
+
+const httpCurpAuth=async(req,res)=>{
+    const data=req.body
+  
+    const user=await  c.curpAuth(data.curp)
+
+    res.status(200).json(user)
+}
+
+//? //////////////
+const httpCurpCodeLogin=async(req,res)=>{
+    const data=req.body
+  
+    const user=await  c.curpCodeLogin(data)
+
+    res.status(200).json(user)
 }
 
 //? //////////////
@@ -74,7 +93,9 @@ module.exports={
     httpLogauth,
     httpCreateCode,
     httpEmailUnique,
-    httpCurpUnique
+    httpCurpUnique,
+    httpCurpAuth,
+    httpCurpCodeLogin
 }
 
 

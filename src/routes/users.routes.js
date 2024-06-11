@@ -6,10 +6,10 @@ const manageErrors = require('../toolkit/manageErrors')
 //? //////////////////////////////////////////////////////////////////////
 //TODO ME
 //*Obtiene la informacion del usuario
-router.get("/users/me",manageErrors(services.httpGetMe))
+router.get("/users/me",manageErrors(services.httpGetMe,0))
 
 //*edita la informacion del usuario
-router.put("/users/me",manageErrors(services.httpEditMe))
+router.put("/users/me",manageErrors(services.httpEditMe,0))
 
 //? //////////////////////////////////////////////////////////////////////
 //TODO USERS
@@ -44,13 +44,13 @@ router.post("/users/file",manageErrors(services.httpNewFileUser,0))
 //? //////////////////////////////////////////////////////////////////////
 //TODO ME FILES
 //* Obtiene todos los archivos del usuario
-router.get("/users/me/files",manageErrors(services.httpGetMeAllFiles))
+router.get("/users/me/files",manageErrors(services.httpGetMeAllFiles,0))
 
 //*Obtiene un archivo por id que pertenece al usuario
-router.get("/users/me/files/:id",manageErrors(services.httpGetMeFiles))
+router.get("/users/me/files/:id",manageErrors(services.httpGetMeFiles,0))
 
 //*Sube un archivo nuevo a nombre del usuario
-router.post("/users/me/files",manageErrors(services.httpNewFileMe))
+router.post("/users/me/files",manageErrors(services.httpNewFileMe,0))
 
 //! SIN USAR ///////////////////////////////////////////////////////////////////
 

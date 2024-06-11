@@ -65,8 +65,8 @@ const getFileById=async(userId,id)=>{
 
 const getAllFileUser=async(userId)=>{
     const user=await keyFilesModel.findAll({
-        where:{active:1},
-        attributes:["nameFile","id"],
+        where:{activo:1},
+        attributes:["nombre_file","id","descripcion"],
     })
 
     return user

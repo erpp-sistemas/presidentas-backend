@@ -7,7 +7,7 @@ const getAllFiles = async () => {
 };
 
 const getByIdFile = async (id) => {
-  const files = await filesModel.findOne({ where: { id } });
+  const files = await filesModel.findOne({ where: { key_file:id } });
   if (!files) {
     throw { message: "This id not exist", status: 404 };
   }
