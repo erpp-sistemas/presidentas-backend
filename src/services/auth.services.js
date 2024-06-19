@@ -40,6 +40,15 @@ const httpRegister=async(req,res)=>{
 
 //? //////////////
 
+const httpRegisterMasivo=async(req,res)=>{
+    const data=req.body
+  
+        const user=await c.registerMasivo(data)
+        res.status(201).json({message:"user created success",user})
+}
+
+//? //////////////
+
 const httpLogauth=async(req,res)=>{
     res.cookie("token", "", {
         expires: new Date(0),
@@ -95,7 +104,8 @@ module.exports={
     httpEmailUnique,
     httpCurpUnique,
     httpCurpAuth,
-    httpCurpCodeLogin
+    httpCurpCodeLogin,
+    httpRegisterMasivo
 }
 
 

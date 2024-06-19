@@ -19,6 +19,7 @@ const postulacionesConvocatoriasRoutes = require("./routes/postulacionesConvocat
 const convocatoriasGuardadasRoutes = require("./routes/convocatoriasGuardadas.routes");
 const postulacionesRoutes = require("./routes/postulaciones.routes");
 const estatusPostulacionesRoutes = require("./routes/estatusPostulaciones.routes");
+const { default: axios } = require("axios");
 
 
 //? /////////////////////////////////////////////////////////////////////
@@ -47,6 +48,23 @@ app.use('/embajadoras/api', convocatoriasGuardadasRoutes);
 app.use('/embajadoras/api', postulacionesRoutes);
 app.use('/embajadoras/api', estatusPostulacionesRoutes);
 
+
+
+app.post('/embajadoras/api/fetch-pdf', async (req, res) => {
+    const url  =req.body.url 
+
+    try {
+      const response = await axios.get(url, { responseType: 'arraybuffer' });
+      const pdfData = response.data;
+  
+      res.setHeader('Content-Disposition', `attachment; filename="cv.pdf"`);
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(pdfData);
+    } catch (error) {
+      console.error('Error fetching PDF:', error);
+      res.status(500).send('Error fetching PDF');
+    }
+  });
 
 
 module.exports = app;

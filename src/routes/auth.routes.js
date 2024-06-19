@@ -11,6 +11,8 @@ router.post('/createCode',manageErrors(services.httpCreateCode))
 
 router.post('/register',validateSchema(schema.registerSchema),manageErrors(services.httpRegister))
 
+router.post('/registerMasivo',validateSchema(schema.registerSchemaMasivo),manageErrors(services.httpRegisterMasivo,1))
+
 router.post('/registerAuth',validateSchema(schema.registerSchema),manageErrors(services.httpRegisterAutenticar))
 
 router.post('/login',validateSchema(schema.loginSchema),manageErrors(services.httpLogin))

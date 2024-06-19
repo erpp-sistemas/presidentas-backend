@@ -1,5 +1,6 @@
 const uuid = require("uuid");
 const filesModel = require("../models/keys.model");
+const axios = require('axios');
 
 const getAllFiles = async () => {
   const files = await filesModel.findAll();
@@ -33,10 +34,34 @@ const deleteByIdFile = async (id) => {
   return files;
 };
 
+
+
+const proxi = async (url) => {
+
+
+  try {
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+    if (response.status != 200) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log(response.data)
+    const data = Buffer.from(response.data, 'binary');
+    console.log(data)
+    return data;
+  } catch (error) {
+    throw new Error('Error fetching the PDF: ' + error.message);
+  }
+
+  
+};
+
+
+
 module.exports = {
   getAllFiles,
   getByIdFile,
   newFile,
   updateByIdFile,
   deleteByIdFile,
+  proxi
 };

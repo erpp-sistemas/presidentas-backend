@@ -1,4 +1,6 @@
-const eventosModel = require("../models/eventos.model")
+const asistenciaEventoModel = require("../models/asistenciaEvento.model");
+const eventosModel = require("../models/eventos.model");
+const tipoRegistroModel = require("../models/tipoRegistro.Model");
 
 
   
@@ -70,12 +72,13 @@ const newEventos=async(data)=>{
     const eventosPosiciones=await getAllEventos()
     let newPosicion=2
     const eventDate = new Date(data.fecha_evento);
-    
-    for(let i of eventosPosiciones){
+
+    for(let i of eventosPosiciones.proximos){
         await updateByIdEventos({posicion:newPosicion++},i.id)
     }
 
     const eventos=await eventosModel.create({...data,posicion:1,activo:1,fecha_evento:eventDate.toISOString() })
+
     return eventos
 }
 
@@ -91,6 +94,7 @@ const updateByIdEventos=async(data,id)=>{
 
 
 const deleteByIdEventos=async(id)=>{
+    await asistenciaEventoModel.destroy({where:{id_evento:id}})
     const eventos=await eventosModel.destroy({where:{id}})
     return eventos
 }

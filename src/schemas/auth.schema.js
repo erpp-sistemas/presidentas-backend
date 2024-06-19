@@ -21,9 +21,22 @@ const registerSchema=zod.object({
     
 }).strip();
 
+const registerSchemaMasivo=zod.object({
+    correo:zod.string({required_error:"correo is requerid"}),
+    nombre:zod.string({required_error:"nombre is requerid"}),
+    id_evento:zod.number({required_error:"id_evento is requerid"}),
+    fecha_asistencia:zod.string({required_error:"fecha_asistencia is requerid"}),
+    apellidom:zod.string().optional(),
+    apellidop:zod.string().optional(),
+    estado:zod.string().optional(),
+    municipio:zod.string().optional(),
+    
+});
+
 module.exports={
     loginSchema,
-    registerSchema
+    registerSchema,
+    registerSchemaMasivo
 }
 
 

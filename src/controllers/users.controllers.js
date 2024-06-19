@@ -3,23 +3,45 @@ const userModel = require("../models/users.model")
 const fileModel = require("../models/file.model")
 const keyFilesModel = require("../models/keys.model")
 const main = require("../toolkit/sendEmail")
+const tipoRegistroModel = require("../models/tipoRegistro.Model")
 
 
 //? //////////////
 const getAllUsuers=async()=>{
-    const users=await userModel.findAll({
-        where:{rol:2},
-        attributes:{
-                exclude:["contrasena"],
-        include: [
-            [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
+    // const users=await userModel.findAll({
+    //     where:{rol:2},
+    //     attributes:{
+    //             exclude:["contrasena"],
+    //     include: [
+    //         [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
+    //     ]
+    //     },
+    //     include: [{
+    //         model:fileModel,
+    //         where:{fileId:"1"},
+    //         required: false,
+    //     }]
+    // })
+
+    const users=await tipoRegistroModel.findAll({
+        where:{id_tipo:[1,2]},
+        include:[
+            {
+                model:userModel,
+                where:{rol:2},
+                attributes:{
+                        exclude:["contrasena"],
+                include: [
+                    [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
+                ]
+                },
+                include: [{
+                    model:fileModel,
+                    where:{fileId:"1"},
+                    required: false,
+                }]
+            }
         ]
-        },
-        include: [{
-            model:fileModel,
-            where:{fileId:"1"},
-            required: false,
-        }]
     })
 
     

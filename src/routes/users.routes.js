@@ -15,6 +15,8 @@ router.put("/users/me",manageErrors(services.httpEditMe,0))
 //TODO USERS
 //* Obtiene todos los usuarios solo puede acceder un administrativo
 router.get("/users",manageErrors(services.httpGetAllUsers,1))
+//* Obtiene todos los usuarios empadronados solo puede acceder un administrativo
+router.get("/users/empadronados",manageErrors(services.httpGetAllUsers,1))
 
 //* Obtiene todos los administrativos solo puede acceder un administrativo
 router.get("/users/admin",manageErrors(services.httpGetAllUsersAdmins,1))
@@ -36,6 +38,7 @@ router.get("/userByCurp/:curp",manageErrors(services.httpGetUserByCurp,0))
 router.get("/users/files/:id/:file",manageErrors(services.httpGetFilesByUser,1))
 
 //!revisar *actualiza y agrega un archivo de un usario por id
+//*nota veo que lo uso en algunas partes
 // router.post("/users/files/:id/:file",manageErrors(services.httpNewFileUser,0))
 
 //*actualiza y agrega un archivo de un usario por data en body
