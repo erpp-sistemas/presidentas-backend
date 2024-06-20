@@ -1,6 +1,7 @@
 const uuid = require("uuid");
 const filesModel = require("../models/keys.model");
 const axios = require('axios');
+const keyFilesModel = require("../models/keys.model");
 
 const getAllFiles = async () => {
   const files = await filesModel.findAll();
@@ -33,6 +34,10 @@ const deleteByIdFile = async (id) => {
   const files = await filesModel.destroy({ where: { id } });
   return files;
 };
+const deleteByIdFileKey = async (id) => {
+  const files = await keyFilesModel.destroy({ where: { id } });
+  return files;
+};
 
 
 
@@ -63,5 +68,6 @@ module.exports = {
   newFile,
   updateByIdFile,
   deleteByIdFile,
+  deleteByIdFileKey,
   proxi
 };

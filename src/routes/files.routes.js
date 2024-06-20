@@ -19,6 +19,8 @@ router.put('/files/:id',manageErrors(services.httpUpdateFile,1))
 
 router.delete('/files/:id',manageErrors(services.httpDeleteFile,1))
 
+router.delete('/filesKey/:id',manageErrors(services.httpDeleteFileKey,1))
+
 
 
 module.exports=router

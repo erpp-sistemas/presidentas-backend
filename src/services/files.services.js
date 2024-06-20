@@ -30,6 +30,11 @@ const httpDeleteFile = async (req, res) => {
   const file = await c.deleteByIdFile (id);
   res.status(200).json({ Message: 'this event was delete success' });
 }
+const httpDeleteFileKey = async (req, res) => {
+  const id = req.params.id;
+  const file = await c.deleteByIdFileKey (id);
+  res.status(200).json({ Message: 'this event was delete success' });
+}
 
 
 const httpProxi = async (req, res) => {
@@ -62,6 +67,7 @@ module.exports = {
   httpGetAllFiles ,
   httpGetByIdFile ,
   httpDeleteFile ,
+  httpDeleteFileKey ,
   httpNewFile ,
   httpUpdateFile ,
   httpProxi

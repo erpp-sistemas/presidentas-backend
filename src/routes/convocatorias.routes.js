@@ -9,7 +9,7 @@ const validateSchema = require('../toolkit/validdatorSchemas')
 
 router.get('/convocatorias',manageErrors(services.httpGetAllConvocatorias))
 
-router.post('/convocatorias',validateSchema(schema.convocatoriaSchema),manageErrors(services.httpNewConvocat1oria,1))
+router.post('/convocatorias',validateSchema(schema.convocatoriaSchema),manageErrors(services.httpNewConvocatoria,1))
 
 router.get('/convocatorias/:id',manageErrors(services.httpGetByIdConvocatoria))
 
