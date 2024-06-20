@@ -7,43 +7,31 @@ const tipoRegistroModel = require("../models/tipoRegistro.Model")
 
 
 //? //////////////
-const getAllUsuers=async()=>{
-    // const users=await userModel.findAll({
-    //     where:{rol:2},
-    //     attributes:{
-    //             exclude:["contrasena"],
-    //     include: [
-    //         [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
-    //     ]
-    //     },
-    //     include: [{
-    //         model:fileModel,
-    //         where:{fileId:"1"},
-    //         required: false,
-    //     }]
-    // })
+const getAllUsuers=async(tipeRegistro)=>{
 
-    const users=await tipoRegistroModel.findAll({
-        where:{id_tipo:[1,2]},
-        include:[
+    const users = await userModel.findAll({
+        where: {
+            rol: 2
+        },
+        attributes: {
+            exclude: ["contrasena"],
+            include: [
+                [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
+            ]
+        },
+        include: [
             {
-                model:userModel,
-                where:{rol:2},
-                attributes:{
-                        exclude:["contrasena"],
-                include: [
-                    [Sequelize.literal("CONCAT(nombre, ' ', apellidop, ' ', apellidom)"), 'nombre_completo']
-                ]
-                },
-                include: [{
-                    model:fileModel,
-                    where:{fileId:"1"},
-                    required: false,
-                }]
+                model: tipoRegistroModel,
+                where: { id_tipo:tipeRegistro},
+                required: true
+            },
+            {
+                model: fileModel,
+                where: { fileId: "1" },
+                required: false
             }
         ]
-    })
-
+    });
     
     return users
 }

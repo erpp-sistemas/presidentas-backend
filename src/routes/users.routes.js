@@ -16,7 +16,7 @@ router.put("/users/me",manageErrors(services.httpEditMe,0))
 //* Obtiene todos los usuarios solo puede acceder un administrativo
 router.get("/users",manageErrors(services.httpGetAllUsers,1))
 //* Obtiene todos los usuarios empadronados solo puede acceder un administrativo
-router.get("/users/empadronados",manageErrors(services.httpGetAllUsers,1))
+router.get("/users/empadronados",manageErrors(services.httpGetAllEmpadronados,1))
 
 //* Obtiene todos los administrativos solo puede acceder un administrativo
 router.get("/users/admin",manageErrors(services.httpGetAllUsersAdmins,1))

@@ -3,7 +3,12 @@ const { validateToken } = require('../toolkit/jwtToken')
 
 //? //////////////
 const httpGetAllUsers=async(req,res)=>{
-    const users= await c.getAllUsuers()
+    const users= await c.getAllUsuers([1,2])
+    res.status(200).json({users})
+}
+//? //////////////
+const httpGetAllEmpadronados=async(req,res)=>{
+    const users= await c.getAllUsuers([3])
     res.status(200).json({users})
 }
 //? //////////////
@@ -165,6 +170,7 @@ module.exports={
     httpGetFilesByUser,
     httpNewFileUser,
     httpGetUserByCurp,
-    httpGetAllFilesByUser
+    httpGetAllFilesByUser,
+    httpGetAllEmpadronados
 }
 
