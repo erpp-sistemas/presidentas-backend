@@ -31,10 +31,18 @@ const httpDeleteConvocatoria = async (req, res) => {
   res.status(200).json({ Message: 'this event was delete success' });
 }
 
+const httpUpdateActive = async (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  const convocatoria = await c.activeByIdConvocatoria(data, id);
+  res.status(200).json({ convocatoria });
+}
+
 module.exports = {
   httpGetAllConvocatorias ,
   httpGetByIdConvocatoria ,
   httpDeleteConvocatoria ,
   httpNewConvocatoria ,
   httpUpdateConvocatoria ,
+  httpUpdateActive
 }

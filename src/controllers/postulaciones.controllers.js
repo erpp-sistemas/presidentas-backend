@@ -12,7 +12,7 @@ const getAllPostulaciones = async (usuario_id) => {
         where:{usuario_id},
         include:[{
             model:convocatoriaModel,
-            attributes:["titulo_convocatoria","des_breve","created_at"],
+            attributes:["titulo_convocatoria","des_breve","created_at","activo"],
           },{
             model:estatusPostulacionesModel
           }
@@ -45,7 +45,7 @@ const getByIdPostulacione = async (id) => {
     include:[
       {
         model:convocatoriaModel,
-        attributes:["id","titulo_convocatoria","categorias_id","files_keys"]
+        attributes:["id","titulo_convocatoria","categorias_id","files_keys","activo"]
       },
     {
       model:userModel,

@@ -35,9 +35,10 @@ const convocatoriaModel=Sequelize.define("convocatorias",{
         type:DataTypes.STRING,
         allowNull:false,
         get() {
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>FORMATEANDO FECHAS")
+           
             const fecha = this.getDataValue('fecha_limite_postulacion');
-            const allFechas=formatDateText(fecha)
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>FORMATEANDO FECHAS",fecha)
+            const allFechas=fecha&&formatDateText(fecha)
            
             console.log({...allFechas} );
             return fecha ? {...allFechas} : null;

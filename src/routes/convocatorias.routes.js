@@ -17,4 +17,8 @@ router.put('/convocatorias/:id',manageErrors(services.httpUpdateConvocatoria,1))
 
 router.delete('/convocatorias/:id',manageErrors(services.httpDeleteConvocatoria,1))
 
+router.put('/convocatorias/desactivar/:id',manageErrors(services.httpUpdateActive,1))
+
+
+
 module.exports=router

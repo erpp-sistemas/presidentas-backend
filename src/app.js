@@ -1,5 +1,6 @@
 const express = require("express");
 const cors=require('cors')
+const { default: axios } = require("axios");
 
 const app = express();
 
@@ -19,7 +20,8 @@ const postulacionesConvocatoriasRoutes = require("./routes/postulacionesConvocat
 const convocatoriasGuardadasRoutes = require("./routes/convocatoriasGuardadas.routes");
 const postulacionesRoutes = require("./routes/postulaciones.routes");
 const estatusPostulacionesRoutes = require("./routes/estatusPostulaciones.routes");
-const { default: axios } = require("axios");
+const messagesRoutes = require("./routes/messages.routes");
+
 
 
 //? /////////////////////////////////////////////////////////////////////
@@ -47,6 +49,8 @@ app.use('/embajadoras/api', postulacionesConvocatoriasRoutes);
 app.use('/embajadoras/api', convocatoriasGuardadasRoutes);
 app.use('/embajadoras/api', postulacionesRoutes);
 app.use('/embajadoras/api', estatusPostulacionesRoutes);
+app.use('/embajadoras/api', estatusPostulacionesRoutes);
+app.use('/embajadoras/api', messagesRoutes);
 
 
 

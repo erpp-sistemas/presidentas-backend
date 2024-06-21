@@ -83,6 +83,12 @@ const updateByIdConvocatoria = async (data, id) => {
    return convocatorias;
 };
 
+const activeByIdConvocatoria = async (data, id) => {
+
+   const convocatorias = await convocatoriasModel.update({activo:data.activo}, { where: { id } });
+   return convocatorias;
+};
+
 const deleteByIdConvocatoria = async (id) => {
 
 
@@ -100,4 +106,5 @@ module.exports = {
    newConvocatoria,
    updateByIdConvocatoria,
    deleteByIdConvocatoria,
+   activeByIdConvocatoria
 };

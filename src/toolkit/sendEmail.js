@@ -40,7 +40,10 @@ const  main=async(user,correo)=> {
     <div style="background-color: #c5516b; color: #ffffff; padding: 15px 10px; ">
        ${correo.asunto}
     </div>
-    ${correo.html}
+    <div style=" padding: 25px 10px; margin: 20px 0px; ">
+        ${correo.html}
+    </div>
+    
     <footer style="display: flex;  width: 100%; background-color: #1f2937; color: #ffffff; text-align: center; padding: 15px 0;">
         <div style="text-align: center; width: 100%; margin: auto; z-index: 29; font-size: x-small;">
             <span>Embajadoras ® <a href="https://embajadoras.mx/" style="color: #e46f88; text-decoration: none;">https://embajadoras.mx/</a></span>
