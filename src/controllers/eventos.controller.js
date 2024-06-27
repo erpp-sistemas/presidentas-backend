@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const asistenciaEventoModel = require("../models/asistenciaEvento.model");
 const eventosModel = require("../models/eventos.model");
 const tipoRegistroModel = require("../models/tipoRegistro.Model");
@@ -12,7 +13,17 @@ const arrayMeses = [
 const getAllEventos=async()=>{
     const eventos=await eventosModel.findAll({order: [
         ['fecha_evento', 'ASC'] 
-    ]})
+    ],
+    attributes: [
+        "id","title","descripcion","fecha_evento","url_foto","posicion","activo",
+        [Sequelize.literal(`(
+            SELECT COUNT(*)
+            FROM asistencia_evento 
+            WHERE
+                asistencia_evento.id_evento = eventos.id
+        )`), 'asistentes']
+    ],
+})
    
         const dateToday=new Date()
         const arrayEventosPasados=[]

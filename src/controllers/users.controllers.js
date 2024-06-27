@@ -4,6 +4,7 @@ const fileModel = require("../models/file.model")
 const keyFilesModel = require("../models/keys.model")
 const main = require("../toolkit/sendEmail")
 const tipoRegistroModel = require("../models/tipoRegistro.Model")
+const asistenciaEventoModel = require("../models/asistenciaEvento.model")
 
 
 //? //////////////
@@ -23,12 +24,17 @@ const getAllUsuers=async(tipeRegistro)=>{
             {
                 model: tipoRegistroModel,
                 where: { id_tipo:tipeRegistro},
-                required: true
+                required: true,
             },
             {
                 model: fileModel,
                 where: { fileId: "1" },
                 required: false
+            },
+            {
+                model:asistenciaEventoModel,
+                required:false,
+                attributes:{exclude:["descripcion","activo","posicion"]}
             }
         ]
     });

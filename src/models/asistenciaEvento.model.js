@@ -30,7 +30,7 @@ const asistenciaEventoModel=sequelize.define('asistencia_evento',{
     freezeTableName:true
 })
 
-// asistenciaEventoModel.hasOne(userModel,{foreignKey:"id"})
+userModel.hasMany(asistenciaEventoModel,{foreignKey:"id_user"})
 
 
 
