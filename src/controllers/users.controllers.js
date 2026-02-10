@@ -8,7 +8,7 @@ const asistenciaEventoModel = require("../models/asistenciaEvento.model")
 
 
 //? //////////////
-const getAllUsuers=async(tipeRegistro)=>{
+const getAllUsuers = async (tipeRegistro) => {
 
     const users = await userModel.findAll({
         where: {
@@ -23,7 +23,7 @@ const getAllUsuers=async(tipeRegistro)=>{
         include: [
             {
                 model: tipoRegistroModel,
-                where: { id_tipo:tipeRegistro},
+                where: { id_tipo: tipeRegistro },
                 required: true,
             },
             {
@@ -32,95 +32,95 @@ const getAllUsuers=async(tipeRegistro)=>{
                 required: false
             },
             {
-                model:asistenciaEventoModel,
-                required:false,
-                attributes:{exclude:["descripcion","activo","posicion"]}
+                model: asistenciaEventoModel,
+                required: false,
+                attributes: { exclude: ["descripcion", "activo", "posicion"] }
             }
         ]
     });
-    
+
     return users
 }
 
 //? //////////////
-const getAllAdmins=async()=>{
-    const users=await userModel.findAll({where:{rol:{[Op.not]:2}}})
+const getAllAdmins = async () => {
+    const users = await userModel.findAll({ where: { rol: { [Op.not]: 2 } } })
     return users
 }
 
 //? //////////////
-const getUserById=async(id)=>{
+const getUserById = async (id) => {
     const user = await userModel.findOne({
         where: { id },
         include: [{
-            model:fileModel,
-            where:{fileId:"1"},
+            model: fileModel,
+            where: { fileId: "1" },
             required: false
-        }] 
+        }]
     });
     return user
 }
 //? //////////////
-const getUserByCurp=async(curp)=>{
+const getUserByCurp = async (curp) => {
     const user = await userModel.findOne({
         where: { curp },
         include: [{
-            model:fileModel,
+            model: fileModel,
             required: false
-        }] 
+        }]
     });
     return user
 }
 
 //? //////////////
 
-const getFileById=async(userId,id)=>{
-    const user=await fileModel.findOne({where:{fileId:id,userId}})
+const getFileById = async (userId, id) => {
+    const user = await fileModel.findOne({ where: { fileId: id, userId } })
     return user
 }
 
-const getAllFileUser=async(userId)=>{
-    const user=await keyFilesModel.findAll({
-        where:{activo:1},
-        attributes:["nombre_file","id","descripcion"],
+const getAllFileUser = async (userId) => {
+    const user = await keyFilesModel.findAll({
+        where: { activo: 1 },
+        attributes: ["nombre_file", "id", "descripcion"],
     })
 
     return user
 }
 
 //? //////////////
-const updateUserById=async(id,data)=>{
-    
-    const tell= await userModel.findOne({where:{tell:data.tell}})
-    const correo= await userModel.findOne({where:{correo:data.correo}})
+const updateUserById = async (id, data) => {
 
-    const candado1=(id==tell?.dataValues?.id||!tell)
-    const candado2=(id==correo?.dataValues?.id||!correo)
-   
-    const messages=[
+    const tell = await userModel.findOne({ where: { tell: data.tell } })
+    const correo = await userModel.findOne({ where: { correo: data.correo } })
+
+    const candado1 = (id == tell?.dataValues?.id || !tell)
+    const candado2 = (id == correo?.dataValues?.id || !correo)
+
+    const messages = [
         "this tell already exists",
         "this email already exists"
     ]
 
-    if(candado1&&candado2){
-        
-        const user=await userModel.update(data,{where:{id}})
+    if (candado1 && candado2) {
+
+        const user = await userModel.update(data, { where: { id } })
         return user
 
-    }else{
-        throw {message:messages[!candado2&&1||!candado1&&0]}
+    } else {
+        throw { message: messages[!candado2 && 1 || !candado1 && 0] }
     }
-   
+
 }
 
 //? //////////////
 
-const newFile=async(data)=>{
-    const existeFIle=await fileModel.findOne({where:{userId:data.userId,fileId:data.fileId}})
-    if(existeFIle){
-        await fileModel.destroy({where:{userId:data.userId,fileId:data.fileId}})
+const newFile = async (data) => {
+    const existeFIle = await fileModel.findOne({ where: { userId: data.userId, fileId: data.fileId } })
+    if (existeFIle) {
+        await fileModel.destroy({ where: { userId: data.userId, fileId: data.fileId } })
     }
-    const file=await fileModel.create(data)
+    const file = await fileModel.create(data)
     return file
 }
 
@@ -129,7 +129,7 @@ const newFile=async(data)=>{
 
 
 
-module.exports={
+module.exports = {
     getAllAdmins,
     getAllUsuers,
     updateUserById,
@@ -138,7 +138,7 @@ module.exports={
     getAllFileUser,
     getFileById,
     getUserByCurp
-    
+
 }
 
 
