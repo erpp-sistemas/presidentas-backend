@@ -2,7 +2,7 @@ const {Sequelize}=require('sequelize')
 require('dotenv').config()
 
 
-
+// TODO: Configuración de la base de datos
 const conexion= new Sequelize({
     dialect:"mssql",
     host:process.env.HOST,
