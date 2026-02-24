@@ -103,7 +103,7 @@ const registerAutenticar = async (data) => {
         if (!tell && !correo) {
             const user = await usersModel.create({ id, ...data, contrasena: passHasheo, rol: 2 })
             const correoPlantilla = await correosModel.findOne({ where: { id: 2 } })
-            await tipoRegistroModel.create({ id_user: id, id_tipo: 1 })
+            await tipoRegistroModel.create({ id_user: id, id_tipo: 1, id_user_register: data.id_user_register })
             main({ ...user.dataValues, contrasena: data.contrasena }, correoPlantilla)
             return user
         } else {
@@ -133,7 +133,7 @@ const register = async (data) => {
     if (!tell && !correo) {
         const user = await usersModel.create({ id, ...data, contrasena: passHasheo, rol: 2 })
         const correoPlantilla = await correosModel.findOne({ where: { id: 2 } })
-        await tipoRegistroModel.create({ id_user: id, id_tipo: 2 })
+        await tipoRegistroModel.create({ id_user: id, id_tipo: 2, id_user_register: data.id_user_register })
         main({ ...user.dataValues, contrasena: data.contrasena }, correoPlantilla)
         return user
     } else {
@@ -168,7 +168,7 @@ const registerMasivo = async (data) => {
     if (!correo && !tell) {
 
         const user = await userMasivoModel.create({ id, numeroExt, ...data, rol: 2 })
-        await tipoRegistroModel.create({ id_user: id, id_tipo: 3 })
+        await tipoRegistroModel.create({ id_user: id, id_tipo: 3, id_user_register: data.id_user_register })
         await asistenciaEventoModel.create({ ...bodyAsistencia, id_user: id })
 
         return user

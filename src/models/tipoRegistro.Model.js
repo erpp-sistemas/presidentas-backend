@@ -23,7 +23,11 @@ const tipoRegistroModel=sequelize.define('registros',{
     created_at:{
         type:Datatypes.STRING,
         allowNull:true
-    }
+    },
+    id_user_register:{
+        type:Datatypes.STRING,
+        allowNull:true,
+    },
 
 },{
     timestamps:false

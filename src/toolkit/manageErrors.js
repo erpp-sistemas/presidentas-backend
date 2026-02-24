@@ -15,10 +15,8 @@ const { validateToken } = require("./jwtToken")
 const managePermissions = (rol, token) => {
   let candado = true
   const daraToken = validateToken(token)
-
   if (rol && daraToken?.id) {
-    candado = daraToken.rol == rol;
-
+    candado = (daraToken.rol == rol || daraToken.rol == 3);
   }
   if (daraToken == null) { candado = null }
 
