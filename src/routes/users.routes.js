@@ -62,7 +62,8 @@ router.get("/users/fileByID/:id",manageErrors(services.httpGetMeFiles,1))
 
 //!Obtiene un archivo de un usario en espesifico
 
-
+// obtiene la informacion de la coordinadora rol 3 con sus redes sociales dependiendo del municipio
+router.get("/user-by-municipio/:id_municipio", services.httpGetCoordinadora)
 
 
 

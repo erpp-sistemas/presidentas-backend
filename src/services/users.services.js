@@ -155,6 +155,13 @@ const httpNewFileUser = async (req, res) => {
 
 //? //////////////
 
+// devolver informacion de la coordinara con sus redes sociales
+const httpGetCoordinadora = async (req, res) => {
+    const { id_municipio } = req.params;
+    const data = await c.getInfoCoordinadora(Number(id_municipio));
+    res.status(201).json(data)
+}
+
 
 module.exports = {
     httpGetAllUsers,
@@ -171,6 +178,7 @@ module.exports = {
     httpNewFileUser,
     httpGetUserByCurp,
     httpGetAllFilesByUser,
-    httpGetAllEmpadronados
+    httpGetAllEmpadronados,
+    httpGetCoordinadora
 }
 

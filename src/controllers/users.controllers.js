@@ -5,6 +5,10 @@ const keyFilesModel = require("../models/keys.model")
 const main = require("../toolkit/sendEmail")
 const tipoRegistroModel = require("../models/tipoRegistro.Model")
 const asistenciaEventoModel = require("../models/asistenciaEvento.model")
+const userMunicipioModel = require("../models/user_municipio.model")
+const redesSocialesModel = require("../models/redes_sociales.model")
+const municipioModel = require("../models/municipio.model");
+
 
 
 //? //////////////
@@ -125,7 +129,78 @@ const newFile = async (data) => {
 }
 
 
+const getInfoCoordinadora = async (municipioId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const coordinadora = await userMunicipioModel.findOne({
+                where: {
+                    id_municipio: municipioId
+                },
+                include: [
+                    {
+                        model: userModel,
+                        as: "usuario",
+                        where: {
+                            rol: 3
+                        },
+                        attributes: [
+                            "id",
+                            "nombre",
+                            "apellidop",
+                            "apellidom",
+                            "correo",
+                            "tell"
+                        ],
+                        include: [
+                            {
+                                model: redesSocialesModel,
+                                as: "redes",
+                                attributes: ["facebook", "instagram", "tiktok"]
+                            }
+                        ]
+                    },
+                    {
+                        model: municipioModel,
+                        as: "municipio",
+                        attributes: ["nombre"]
+                    }
+                ]
+            });
 
+            if (!coordinadora) {
+                resolve([])
+            }
+
+            const file_image = await fileModel.findOne({
+                where: {
+                    userId: coordinadora.usuario.id
+                }
+            })
+
+            const photo = file_image.dataValues.urlFile
+
+            const response = {
+                id: coordinadora.usuario.id,
+                nombre: coordinadora.usuario.nombre,
+                apellidop: coordinadora.usuario.apellidop,
+                apellidom: coordinadora.usuario.apellidom,
+                correo: coordinadora.usuario.correo,
+                tell: coordinadora.usuario.tell,
+                photo: photo,
+                municipio: coordinadora.municipio.nombre,
+                facebook: coordinadora.usuario.redes?.facebook,
+                instagram: coordinadora.usuario.redes?.instagram,
+                tiktok: coordinadora.usuario.redes?.tiktok
+            }
+
+            resolve(response);
+        } catch (error) {
+            console.error(error)
+            reject({ error: "Error al obtener coordinadora" })
+        }
+    })
+
+}
 
 
 
@@ -137,7 +212,8 @@ module.exports = {
     newFile,
     getAllFileUser,
     getFileById,
-    getUserByCurp
+    getUserByCurp,
+    getInfoCoordinadora
 
 }
 
