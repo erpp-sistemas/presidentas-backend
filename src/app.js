@@ -1,6 +1,7 @@
 const express = require("express");
 const cors=require('cors')
 const { default: axios } = require("axios");
+require("./models"); // Esto inicializa relaciones
 
 const app = express();
 

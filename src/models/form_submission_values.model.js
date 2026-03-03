@@ -26,24 +26,24 @@ const formSubmissionValuesModel = sequelize.define("form_submission_values", {
   timestamps: false,
 });
 
-formSubmissionValuesModel.belongsTo(formSubmissionsModel, {
-  foreignKey: "submission_id",
-});
+// formSubmissionValuesModel.belongsTo(formSubmissionsModel, {
+//   foreignKey: "submission_id",
+// });
 
-formSubmissionValuesModel.belongsTo(formFieldsModel, {
-  foreignKey: "field_id",
-});
+// formSubmissionValuesModel.belongsTo(formFieldsModel, {
+//   foreignKey: "field_id",
+// });
 
-formSubmissionsModel.hasMany(formSubmissionValuesModel, {
-  foreignKey: "submission_id",
-  as: "values",
-  onDelete: "CASCADE",
-});
+// formSubmissionsModel.hasMany(formSubmissionValuesModel, {
+//   foreignKey: "submission_id",
+//   as: "values",
+//   onDelete: "CASCADE",
+// });
 
-formFieldsModel.hasMany(formSubmissionValuesModel, {
-  foreignKey: "field_id",
-  as: "submission_values",
-  onDelete: "CASCADE",
-});
+// formFieldsModel.hasMany(formSubmissionValuesModel, {
+//   foreignKey: "field_id",
+//   as: "submission_values",
+//   onDelete: "CASCADE",
+// });
 
 module.exports = formSubmissionValuesModel;

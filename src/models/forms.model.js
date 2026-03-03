@@ -24,4 +24,11 @@ const formsModel = sequelize.define("forms", {
   timestamps: false
 });
 
+formsModel.associate = (models) => {
+  formsModel.hasMany(models.FormFields, {
+    foreignKey: "form_id",
+    as: "fields",
+  });
+};
+
 module.exports = formsModel;

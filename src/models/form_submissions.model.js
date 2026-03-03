@@ -1,6 +1,7 @@
 const Datatypes = require("sequelize").DataTypes;
 const sequelize = require("../config/dbConfig");
 
+
 const formsModel = require("./forms.model");
 
 const formSubmissionsModel = sequelize.define("form_submissions", {
@@ -29,14 +30,15 @@ const formSubmissionsModel = sequelize.define("form_submissions", {
   timestamps: false,
 });
 
-formSubmissionsModel.belongsTo(formsModel, {
-  foreignKey: "form_id",
-});
+// formSubmissionsModel.belongsTo(formsModel, {
+//   foreignKey: "form_id",
+// });
 
-formsModel.hasMany(formSubmissionsModel, {
-  foreignKey: "form_id",
-  as: "submissions",
-  onDelete: "CASCADE",
-});
+// formsModel.hasMany(formSubmissionsModel, {
+//   foreignKey: "form_id",
+//   as: "submissions",
+//   onDelete: "CASCADE",
+// });
+
 
 module.exports = formSubmissionsModel;

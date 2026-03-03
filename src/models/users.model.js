@@ -3,7 +3,6 @@ const sequelize=require('../config/dbConfig')
 const fileModel = require('./file.model')
 
 
-
 const userModel=sequelize.define('users',{
     id:{
         type:Datatypes.STRING,
@@ -77,8 +76,6 @@ const userModel=sequelize.define('users',{
 })
 
 userModel.hasMany(fileModel,{foreignKey:"userId"})
-
-
 
 
 module.exports=userModel

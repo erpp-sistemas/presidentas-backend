@@ -1,10 +1,13 @@
 
 
 const sequelize = require("../config/dbConfig");
+const { Op } = require("sequelize");
 const Forms = require("../models/forms.model");
 const FormFields = require("../models/form_fields.model");
 const formSubmissionsModel = require("../models/form_submissions.model");
 const formSubmissionValuesModel = require("../models/form_submission_values.model");
+const usersModel = require("../models/users.model");
+
 
 exports.createForm = async (data) => {
   const transaction = await sequelize.transaction();
@@ -74,17 +77,23 @@ exports.getFormById = async (id) => {
         model: require("../models/form_fields.model"),
         as: "fields",
       },
-      order: [[{ model: require("../models/form_fields.model"), as: "fields" }, "order_index", "ASC"]],
+      order: [
+        [
+          { model: require("../models/form_fields.model"), as: "fields" },
+          "order_index",
+          "ASC",
+        ],
+      ],
     });
 
     if (!form) {
-      return res.status(404).json({ message: "Formulario no encontrado" });
+      return null;
     }
 
-    return form
+    return form;
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    throw error; // 👈 que el controller maneje el error
   }
 };
 
@@ -93,6 +102,19 @@ exports.submitForm = async ({ form_id, answers, user_id, ip_address }) => {
   const t = await sequelize.transaction();
 
   try {
+
+    const fields = await FormFields.findAll({
+      where: { form_id: form_id }
+    });
+
+    const errors = validateAnswers(answers, fields);
+
+    if (errors.length > 0) {
+      return {
+        success: false,
+        errors
+      };
+    }
 
     const submission = await formSubmissionsModel.create({
       form_id: form_id,
@@ -122,5 +144,127 @@ exports.submitForm = async ({ form_id, answers, user_id, ip_address }) => {
     console.error(error);
     await t.rollback();
     return { error: "Error saving form" };
+  }
+};
+
+
+function validateAnswers(answers, fields) {
+
+  const errors = [];
+
+  const fieldMap = {};
+  fields.forEach(field => {
+    fieldMap[field.name] = field;
+  });
+
+  // 1️⃣ Validar campos obligatorios
+  fields.forEach(field => {
+    if (field.required) {
+      if (!answers[field.name] || answers[field.name].toString().trim() === "") {
+        errors.push(`${field.label} es obligatorio`);
+      }
+    }
+  });
+
+  // 2️⃣ Validar que no envíen campos inexistentes
+  Object.keys(answers).forEach(key => {
+    if (!fieldMap[key]) {
+      errors.push(`El campo ${key} no pertenece al formulario`);
+    }
+  });
+
+  // 3️⃣ Validar tipos
+  Object.entries(answers).forEach(([key, value]) => {
+    const field = fieldMap[key];
+    if (!field) return;
+
+    switch (field.type) {
+
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          errors.push(`${field.label} no es un email válido`);
+        }
+        break;
+
+      case "number":
+        if (isNaN(value)) {
+          errors.push(`${field.label} debe ser numérico`);
+        }
+        break;
+
+      case "date":
+        if (isNaN(Date.parse(value))) {
+          errors.push(`${field.label} no es una fecha válida`);
+        }
+        break;
+
+      case "select":
+        if (field.options && !field.options.includes(value)) {
+          errors.push(`${field.label} tiene una opción inválida`);
+        }
+        break;
+
+    }
+  });
+
+  return errors;
+}
+
+
+// controllers/forms.controller.js
+
+exports.getFormSubmissions = async (id, page, limit, search) => {
+  try {
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await formSubmissionsModel.findAndCountAll({
+      distinct: true,
+      where: {
+        form_id: id
+      },
+      offset: parseInt(offset),
+      limit: parseInt(limit),
+      order: [["created_at", "DESC"]],
+
+      include: [
+        {
+          model: usersModel,
+          as: "user",
+          attributes: ["nombre", "apellidop", "correo"],
+          where: search
+            ? {
+              [Op.or]: [
+                { nombre: { [Op.like]: `%${search}%` } },
+                { apellidop: { [Op.like]: `%${search}%` } }
+              ]
+            }
+            : undefined,
+          required: search ? true : false
+        },
+        {
+          model: formSubmissionValuesModel,
+          as: "values",
+          required: false, // 🔥 SIEMPRE false
+          include: [
+            {
+              model: FormFields,
+              as: "field"
+            }
+          ]
+        }
+      ]
+    });
+
+    return {
+      total: count,
+      page: parseInt(page),
+      totalPages: Math.ceil(count / limit),
+      data: rows
+    };
+
+  } catch (error) {
+    console.error(error);
+    return { error: "Error fetching submissions" };
   }
 };

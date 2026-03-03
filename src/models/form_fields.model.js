@@ -1,8 +1,6 @@
 const Datatypes = require("sequelize").DataTypes;
 const sequelize = require("../config/dbConfig");
 
-const formsModel = require("./forms.model");
-
 const formFieldsModel = sequelize.define("form_fields", {
   id: {
     type: Datatypes.INTEGER,
@@ -52,14 +50,12 @@ const formFieldsModel = sequelize.define("form_fields", {
   timestamps: false,
 });
 
-formFieldsModel.belongsTo(formsModel, {
-  foreignKey: "form_id",
-});
 
-formsModel.hasMany(formFieldsModel, {
-  foreignKey: "form_id",
-  as: "fields",
-  onDelete: "CASCADE",
-});
+formFieldsModel.associate = (models) => {
+  formFieldsModel.belongsTo(models.Forms, {
+    foreignKey: "form_id",
+    as: "form",
+  });
+};
 
 module.exports = formFieldsModel;

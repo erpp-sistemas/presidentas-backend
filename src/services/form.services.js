@@ -29,8 +29,8 @@ const httpGetForms = async (req, res) => {
 const httpGetFormById = async (req, res) => {
     try {
         const { id } = req.params;
-        const resp = await c.getFormById(id);
-        console.log("Resp: ", resp)
+        console.log("ID ", id)
+        const resp = await c.getFormById(Number(id));
         res.status(201).json(resp)
     } catch (error) {
         res.status(500).json({
@@ -62,10 +62,25 @@ const httpPostFormSubmit = async (req, res) => {
     }
 };
 
+const httpGetSubmissions = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { page = 1, limit = 10, search = "" } = req.query;
+        const submission = await c.getFormSubmissions(Number(id), Number(page), Number(limit), search)
+        res.status(201).json(submission);
+    } catch (error) {
+        res.status(500).json({
+            message: "Error al enviar formulario",
+        });
+    }
+
+}
+
 
 module.exports = {
     httpPostForms,
     httpGetForms,
     httpGetFormById,
-    httpPostFormSubmit
+    httpPostFormSubmit,
+    httpGetSubmissions
 }
