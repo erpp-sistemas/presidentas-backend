@@ -23,6 +23,7 @@ const postulacionesRoutes = require("./routes/postulaciones.routes");
 const estatusPostulacionesRoutes = require("./routes/estatusPostulaciones.routes");
 const messagesRoutes = require("./routes/messages.routes");
 const formsRoutes = require("./routes/forms.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
 
 
 
@@ -53,7 +54,8 @@ app.use('/embajadoras/api', postulacionesRoutes);
 app.use('/embajadoras/api', estatusPostulacionesRoutes);
 app.use('/embajadoras/api', estatusPostulacionesRoutes);
 app.use('/embajadoras/api', messagesRoutes);
-app.use('/embajadoras/api', formsRoutes)
+app.use('/embajadoras/api', formsRoutes);
+app.use('/embajadoras/api', dashboardRoutes);
 
 
 

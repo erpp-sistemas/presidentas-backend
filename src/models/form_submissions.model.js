@@ -19,7 +19,7 @@ const formSubmissionsModel = sequelize.define("form_submissions", {
     allowNull: true,
   },
   created_at: {
-    type: Datatypes.DATE,
+    type: Datatypes.DATE(6),  // 👈 CAMBIADO: DATE(6) para datetimeoffset
     defaultValue: Datatypes.NOW,
   },
   ip_address: {
@@ -29,16 +29,6 @@ const formSubmissionsModel = sequelize.define("form_submissions", {
 }, {
   timestamps: false,
 });
-
-// formSubmissionsModel.belongsTo(formsModel, {
-//   foreignKey: "form_id",
-// });
-
-// formsModel.hasMany(formSubmissionsModel, {
-//   foreignKey: "form_id",
-//   as: "submissions",
-//   onDelete: "CASCADE",
-// });
 
 
 module.exports = formSubmissionsModel;
