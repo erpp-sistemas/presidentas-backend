@@ -8,6 +8,9 @@ const asistenciaEventoModel = require("../models/asistenciaEvento.model")
 const userMunicipioModel = require("../models/user_municipio.model")
 const redesSocialesModel = require("../models/redes_sociales.model")
 const municipioModel = require("../models/municipio.model");
+const sequelize = require("../config/dbConfig");
+const bcrypt = require('bcryptjs')
+const uuid = require('uuid')
 
 
 
@@ -177,7 +180,12 @@ const getInfoCoordinadora = async (municipioId) => {
                 }
             })
 
-            const photo = file_image.dataValues.urlFile
+            let photo = null
+            if (file_image && file_image.dataValues && file_image.dataValues.urlFile != null) {
+                photo = file_image.dataValues.urlFile
+            } else {
+                photo = 'https://img.freepik.com/vector-gratis/mujer-sonriente-cabello-trenzado_1308-175650.jpg?semt=ais_rp_progressive&w=740&q=80'
+            }
 
             const response = {
                 id: coordinadora.usuario.id,
@@ -203,6 +211,101 @@ const getInfoCoordinadora = async (municipioId) => {
 }
 
 
+const createCoordinator = async (data) => {
+    const t = await sequelize.transaction();
+    console.log(data)
+    try {
+        const {
+            nombre,
+            apellidop,
+            apellidom,
+            correo,
+            contrasena,
+            tell,
+            fecha_nacimiento,
+            calle,
+            numero_ext,
+            colonia,
+            municipio_id,
+            redes_sociales // 👈 arreglo de redes
+        } = data;
+
+        // 🔎 Validar correo único
+        const existingUser = await userModel.findOne({
+            where: { correo }
+        });
+
+        if (existingUser) {
+            await t.rollback();
+            return {
+                success: false,
+                message: "El correo ya está registrado"
+            };
+        }
+
+        // 🔐 Hash contraseña
+        const hashedPassword = await bcrypt.hash(contrasena, 10);
+
+        // 👤 Crear usuario (rol 3 = coordinadora)
+        const newUser = await userModel.create({
+            id: uuid.v4(),
+            nombre,
+            apellidop,
+            apellidom,
+            correo,
+            contrasena: hashedPassword,
+            tell,
+            fecha_nacimiento,
+            calle,
+            numeroExt: numero_ext,
+            colonia,
+            rol: 3
+        }, { transaction: t });
+
+        // 🏙 Asignar municipio
+        await userMunicipioModel.create({
+            id_user: newUser.id,
+            id_municipio: municipio_id
+        }, { transaction: t });
+
+        // 🌐 Insertar redes sociales (si existen)
+        if (Array.isArray(redes_sociales) && redes_sociales.length > 0) {
+
+            const redesObj = {
+                id_user: newUser.id,
+                facebook: null,
+                instagram: null,
+                tiktok: null
+            };
+
+            redes_sociales.forEach(r => {
+                if (r.tipo === "facebook") redesObj.facebook = r.url;
+                if (r.tipo === "instagram") redesObj.instagram = r.url;
+                if (r.tipo === "tiktok") redesObj.tiktok = r.url;
+            });
+
+            await redesSocialesModel.create(redesObj, { transaction: t });
+        }
+
+        await t.commit();
+
+        return {
+            success: true,
+            userId: newUser.id,
+            message: "Coordinadora creada correctamente"
+        };
+
+    } catch (error) {
+        await t.rollback();
+        console.error("Error createCoordinator:", error);
+        return {
+            success: false,
+            userId: null,
+            message: "Error al crear coordinadora"
+        };
+    }
+};
+
 
 module.exports = {
     getAllAdmins,
@@ -213,8 +316,8 @@ module.exports = {
     getAllFileUser,
     getFileById,
     getUserByCurp,
-    getInfoCoordinadora
-
+    getInfoCoordinadora,
+    createCoordinator
 }
 
 

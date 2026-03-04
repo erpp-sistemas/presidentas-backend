@@ -79,20 +79,3 @@ userModel.hasMany(fileModel,{foreignKey:"userId"})
 
 
 module.exports=userModel
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

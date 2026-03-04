@@ -163,6 +163,17 @@ const httpGetCoordinadora = async (req, res) => {
 }
 
 
+const httpPostCreateCoordinator = async (req, res) => {
+    const data = req.body;
+    const result = await c.createCoordinator(data);
+    if ( result.success) {
+        res.status(201).json(result.userId)
+    } else {
+        res.status(400).json(result.message)
+    }
+}
+
+
 module.exports = {
     httpGetAllUsers,
     httpGetAllUsersAdmins,
@@ -179,6 +190,7 @@ module.exports = {
     httpGetUserByCurp,
     httpGetAllFilesByUser,
     httpGetAllEmpadronados,
-    httpGetCoordinadora
+    httpGetCoordinadora,
+    httpPostCreateCoordinator
 }
 
