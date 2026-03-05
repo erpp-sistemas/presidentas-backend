@@ -163,10 +163,16 @@ const httpGetCoordinadora = async (req, res) => {
 }
 
 
+const httpGetAllCoordinadoras = async (req, res) => {
+    const { page = 1, limit = 10, search = "" } = req.query;
+    const data = await c.getAllCoordinadoras(Number(page), Number(limit), search);
+    res.status(201).json(data)
+}
+
 const httpPostCreateCoordinator = async (req, res) => {
     const data = req.body;
     const result = await c.createCoordinator(data);
-    if ( result.success) {
+    if (result.success) {
         res.status(201).json(result.userId)
     } else {
         res.status(400).json(result.message)
@@ -191,6 +197,7 @@ module.exports = {
     httpGetAllFilesByUser,
     httpGetAllEmpadronados,
     httpGetCoordinadora,
+    httpGetAllCoordinadoras,
     httpPostCreateCoordinator
 }
 

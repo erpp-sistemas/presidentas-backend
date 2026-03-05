@@ -211,6 +211,53 @@ const getInfoCoordinadora = async (municipioId) => {
 }
 
 
+
+
+const getAllCoordinadoras = async (page = 1, limit = 10, search = "") => {
+    const offset = (page - 1) * limit;
+    const { count, rows } = await userModel.findAndCountAll({
+        where: {
+            rol: 3,
+            [Op.or]: [
+                { nombre: { [Op.like]: `%${search}%` } },
+                { apellidop: { [Op.like]: `%${search}%` } },
+                { correo: { [Op.like]: `%${search}%` } }
+            ]
+        },
+        include: [
+            {
+                model: redesSocialesModel,
+                as: "redes"
+            },
+            {
+                model: userMunicipioModel,
+                as: "municipioRelacion",
+                include: [
+                    {
+                        model: municipioModel,
+                        as: "municipio",
+                    }
+                ]
+            },
+            {
+                model: fileModel
+            }
+        ],
+        offset,
+        limit,
+        distinct: true
+    });
+
+    return {
+        total: count,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+        data: rows
+    };
+};
+
+
+
 const createCoordinator = async (data) => {
     const t = await sequelize.transaction();
     console.log(data)
@@ -307,6 +354,9 @@ const createCoordinator = async (data) => {
 };
 
 
+
+
+
 module.exports = {
     getAllAdmins,
     getAllUsuers,
@@ -317,6 +367,7 @@ module.exports = {
     getFileById,
     getUserByCurp,
     getInfoCoordinadora,
+    getAllCoordinadoras,
     createCoordinator
 }
 

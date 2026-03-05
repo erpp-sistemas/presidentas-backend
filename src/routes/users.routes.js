@@ -65,6 +65,8 @@ router.get("/users/fileByID/:id",manageErrors(services.httpGetMeFiles,1))
 // obtiene la informacion de la coordinadora rol 3 con sus redes sociales dependiendo del municipio
 router.get("/user-by-municipio/:id_municipio", services.httpGetCoordinadora)
 
+router.get("/coordinadoras", manageErrors(services.httpGetAllCoordinadoras, 0) )
+
 router.post("/create-coordinator", manageErrors(services.httpPostCreateCoordinator, 0))
 
 
